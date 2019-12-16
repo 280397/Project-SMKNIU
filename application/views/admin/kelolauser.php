@@ -24,6 +24,7 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Username</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Active</th>
@@ -35,7 +36,11 @@
                             foreach ($row->result() as $key => $data) { ?>
                             <tr>
                                 <th scope="row" style="width:5%;"><?= $i; ?></th>
-                                <td><?= $data->name ?></td>
+                                <td><?= $data->name ?>
+                            </td>
+                                <td><?= $data->id_admin ?><br>
+                            <a class="btn btn-small btn-default" data-target="<?= $data->id ?>" href="<?= base_url('Admin/barcode_qrcode/' . $data->id) ?>">Generate <i class="fas fa-barcode"></i> </a>
+                        </td>
                                 <td><?= $data->username ?></td>
                                 <td><?= $data->role ?></td>
                                 <td><?= $data->active ?></td>

@@ -35,59 +35,66 @@ class Pinjam extends REST_Controller
 		}
 	}
 
-	public function index_post()
+	public function sekian_post()
 	{
 		#Set response API if Success
-		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success post data', 'data' => null);
+		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success post data');
 
 		#Set response API if Not Found
-		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data' => null);
+		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error');
 
 		$id_user_pjm = $this->post('id_user_pjm');
-		// $kodesesi = 'INV-' . date('YmdHis');
 
-		// $session = $this->M_pinjam->ambilSession($id_user_pjm);
-		// $cek_sesi = $this->M_pinjam->cekSession($id_user_pjm)->sesi;
+		$getKode = $this->db->query("SELECT COUNT('kode') AS sesi,kode FROM peminjaman where id_user_pjm = '" . $id_user_pjm . "' ORDER BY id DESC LIMIT 1")->row_array();
 
-		if($this->session->kode == ''){
-			$createKode = 'INV-' . date('YmdHis');	
-			$this->session->set_userdata('kode',$createKode);
-			$kode = $this->session->kode;
+		$kode = $getKode['sesi'];
+
+
+		$session = $this->M_pinjam->ambilSession($id_user_pjm);
+		$cek_sesi = $this->M_pinjam->cekSession($id_user_pjm)->sesi;
+		// var_dump($cek_sesi); die;
+		if ($kode > 0) {
+			$kodesesi = $getKode['kode'];
 		} else {
-			$kode = $this->session->kode;
-		}
-
-		if ($kode == null) {
-			$kodesesi = 'INV-' . date('YmdHis');;
-		} else {
-			$kodesesi = $kode;
+			$kodesesi = 'INV-' . date('YmdHis');
 		}
 
 		$data = [
-			'kode' 		  => $kodesesi,
 			'id_user_pjm' => $id_user_pjm,
-			'tgl_pinjam'  => date('Y-m-d H:i:s'),
+			'kode' => $kodesesi,
+			'tgl_pinjam' => date('Y-m-d H:i:s'),
 			'tgl_kembali' => date('Y-m-d H:i:s'),
-			'id_user' 	  => '0',
-			'keperluan'   => '0'
+			'barcode' => $this->post('barcode'),
+			'keperluan' => '0'
+		];
+		
+		$dataa = [
+			'kode' => $kodesesi,
+			'barcode' => $this->post('barcode'),
+			'status' => 0,
+			// 'tgl_kembali' => date('Y-m-d H:i:s'),
+			// 'barcode' => $this->post('barcode'),
+			// 'keperluan' => null,
 		];
 
-		$dataa = [
-			'kode'    => $kodesesi,
-			'barcode' => $this->post('barcode'),
-			'status'  => 0
-		];
-		
-		$cek = $this->db->query("SELECT * FROM peminjaman where kode = '".$kodesesi."'")->row_array();
-		
-		if (!$cek) {
-			
+		if ($cek_sesi == 0) {
 			$this->db->insert('peminjaman', $data);
-			$this->db->insert('peminjaman_detail', $dataa);
 		} else {
-			$this->db->insert('peminjaman_detail', $dataa);
+			$this->db->insert('peminjaman', $data);
 		}
-		
+
+		// $wo = $this->db->insert_id();
+		// $cek = $this->db->query("SELECT * FROM peminjaman_detail where id = '" . $wo . "'")->row_array();
+
+		// $data = [
+		// 	'id_user_pjm' => $id_user_pjm,
+		// 	'kode' => $cek['kode']
+		// 	// 'tgl_kembali' => date('Y-m-d H:i:s'),
+		// 	// 'barcode' => $this->post('barcode'),
+		// 	// 'keperluan' => null,
+		// ];
+
+		// $this->db->insert('peminjaman', $data);
 		// echo $cek_sesi;
 		// echo $kodesesi;
 		//  $this->M_pinjam->ambilSession($data['id_user_pjm'])->kode;
@@ -101,32 +108,30 @@ class Pinjam extends REST_Controller
 		// }
 	}
 
-	public function index_put()
+	public function index_put($id)
 	{
 		#Set response API if Success
-		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success post data', 'data' => null);
+		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success post data');
 
 		#Set response API if Not Found
-		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data' => null);
-		// $getKode = $this->db->query("SELECT * FROM peminjaman where id_user_pjm = '" . $id . "' ORDER BY id DESC limit 1")->row_array();
-		$kode = $this->session->userdata('kode');
-		// $tgl_pinjam = date('Y-m-d H:i:s');
+		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error');
+		$getKode = $this->db->query("SELECT * FROM peminjaman where id_user_pjm = '" . $id . "' ORDER BY id DESC limit 1")->row_array();
+		$kode = $getKode['kode'];
+		$tgl_pinjam = date('Y-m-d H:i:s');
 		$tgl_kembali = $this->put('tgl_kembali');
 		// $id_user = $this->put('id_user');
 		$keperluan = $this->put('keperluan');
 		$status = 1;
 
 
-		$query = $this->M_pinjam->put($tgl_kembali, $keperluan, $kode);
+		$query = $this->M_pinjam->put($tgl_pinjam, $tgl_kembali, $keperluan, $kode);
 		$query2 = $this->M_pinjam->petet($kode, $status);
-		$this->session->unset_userdata('kode');
-		if ($query && $query2) {
+
+		if ($query) {
 			$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
 		} else {
 			$this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
 		}
-		
-		
 	}
 
 	public function ambil_get()

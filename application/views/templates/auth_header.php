@@ -23,7 +23,8 @@
 </head>
 <style>
     body {
-        background-image: url('assets/img/inventory/gadgets.jpg');
+        /* background-image: url('assets/img/inventory/gadgets.jpg'); */
+        background-color: darkslategrey;
         background-repeat: no-repeat;
     }
 </style>

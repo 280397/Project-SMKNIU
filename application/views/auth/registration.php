@@ -2,12 +2,23 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">Add User</div>
         <div class="card-body">
-            <form method="post" action="<?= base_url('admin/adduser'); ?>">
-                <div class="form-group">
+        <?php $this->view('message'); ?>
+        
+        <?= form_open_multipart('admin/adduser') ?>
+            
+                <div class="form-group"> 
                     <div class="form-row">
                         <div class="col-md-12">
                             <input type="text" id="name" name="name" value="<?= set_value('name'); ?>" class="form-control" placeholder="Full name">
                             <?= form_error('name', '<small class="text-danger">', '</small>'); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <input type="text" id="id_admin" name="id_admin" value="<?= set_value('id_admin'); ?>" class="form-control" placeholder="ID">
+                            <?= form_error('id_admin', '<small class="text-danger">', '</small>'); ?>
                         </div>
                     </div>
                 </div>
@@ -31,7 +42,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Save</button>
-            </form>
+            
             <div class="text-center">
             </div>
         </div>

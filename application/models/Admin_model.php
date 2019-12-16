@@ -60,10 +60,22 @@ class Admin_model extends CI_Model
         return $query;
     }
 
+    function check_id($code, $id = null)
+    {
+        $this->db->from('user');
+        $this->db->where('id_admin', $code);
+        if ($id != null) {
+            $this->db->where('id !=', $id);
+        }
+        $query = $this->db->get();
+        return $query;
+    }
+
     public function edit($post)
     {
         $data = [
             'name' => $post['name'],
+            'id_admin' => $post['id_admin'],
             'username' => $post['username'],
             'role_id' => $post['role_id'],
             'is_active' => $post['is_active']

@@ -106,7 +106,7 @@ class Barang extends CI_Controller
                     redirect('barang');
                 }
             }
-
+ 
             // edit proses
         } else if (isset($_POST['edit'])) {
             if ($this->Barang_m->check_barcode($post['barcode'], $post['id'])->num_rows() > 0) {

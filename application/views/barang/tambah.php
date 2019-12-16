@@ -10,7 +10,7 @@
             </div>
             <div class="box-body">
                 <?php $this->view('message'); ?>
-                <?= form_open_multipart('barang/process') ?>
+                <?= form_open_multipart('Barang/process') ?>
                 <div class="form-group">
                     <label for="barcode">Barcode *</label>
                     <input type="hidden" name="id" value="<?= $row->id ?>">

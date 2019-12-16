@@ -17,6 +17,10 @@
                     <input type="hidden" value="<?= $row->id ?>" name="id">
                 </div>
                 <div class="form-group">
+                    <label for="sumber">ID</label>
+                    <input type="text" class="form-control" id="id_admin" name="id_admin" value="<?= $row->id_admin; ?>" required="required" autofocus="autofocus">
+                </div>
+                <div class="form-group">
                     <label for="sumber">Username</label>
                     <input type="text" class="form-control" id="username" name="username" value="<?= $row->username; ?>">
                 </div>

@@ -41,10 +41,10 @@ class M_pinjam extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function put($tgl_pinjam, $tgl_kembali, $keperluan, $kode)
+    public function put($tgl_kembali, $keperluan, $kode)
     {
 
-        $this->db->set('tgl_pinjam', $tgl_pinjam);
+        // $this->db->set('tgl_pinjam', $tgl_pinjam);
         $this->db->set('tgl_kembali', $tgl_kembali);
         // $this->db->set('id_user', $id_user);
         $this->db->set('keperluan', $keperluan);
