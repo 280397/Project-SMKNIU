@@ -58,13 +58,17 @@ class Pinjam extends REST_Controller
 
 		$data = [
 			'kode' 		 	=> $kodesesi,
+			'barcode' 		=> $this->post('barcode'),
 			'id_user_pjm' 	=> $id_user_pjm,
-			'barcode' 		=> $this->post('barcode')
-
+			'tgl_pinjam'  	=> date('Y-m-d H:i:s'),
+			'tgl_kembali' 	=> date('Y-m-d H:i:s'),
+			'id_user' 	  	=> 0,
+			'keperluan'   	=> 0,
+			'status'  		=> 'addlist'
 		];
 
 
-		$query = $this->db->insert('peminjaman_temp', $data);
+		$query = $this->db->insert('peminjaman', $data);
 
 		// if (!$cek) {
 
@@ -86,7 +90,7 @@ class Pinjam extends REST_Controller
 		}
 	}
 
-	public function pinjam_delete($kode)
+	public function index_put($kode)
 	{
 
 		#Set response API if Success

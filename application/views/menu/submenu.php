@@ -27,7 +27,7 @@
                             <th scope="col">Icon</th>
                             <th scope="col">Active</th>
                             <th scope="col">Action</th>
-                        </tr>
+                        </tr> 
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>

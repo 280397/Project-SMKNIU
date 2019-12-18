@@ -73,17 +73,17 @@ class M_pinjam extends CI_Model
         return $query->result();
     }
 
-    public function cekSession($id_user_pjm)
+    public function cekSession($id_user)
     {
         $this->db->select("COUNT('kode') AS sesi");
-        $this->db->where('id_user_pjm', $id_user_pjm);
-        return $this->db->get('peminjaman_temp')->row();
+        $this->db->where('id_user_pjm', $id_user);
+        return $this->db->get('peminjaman')->row();
     }
 
     public function ambilSession($id_user_pjm)
     {
         $this->db->select('kode');
-        $this->db->from('peminjaman_temp');
+        $this->db->from('peminjaman');
         $this->db->where('id_user_pjm', $id_user_pjm);
         return $this->db->get()->row();
     }

@@ -46,57 +46,67 @@ class Pinjam extends REST_Controller
 		$id_user_pjm = $this->post('id_user_pjm');
 		// $kodesesi = 'INV-' . date('YmdHis');
 
-		$session = $this->M_pinjam->ambilSession($id_user_pjm);
-		$cek_sesi = $this->M_pinjam->cekSession($id_user_pjm);
+		// $session = $this->M_pinjam->ambilSession($id_user_pjm);
+		// $cek_sesi = $this->M_pinjam->cekSession($id_user_pjm)->sesi;
 
-		if ($cek_sesi->sesi > 0) {
-			$kodesesi = $session->kode;
+		if ($this->session->kode == '') {
+			$createKode = 'INV-' . date('YmdHis');
+			$this->session->set_userdata('kode', $createKode);
+			$kode = $this->session->kode;
 		} else {
-			$kodesesi = 'INV-' . date('YmdHis');
+			$kode = $this->session->kode;
 		}
 
+		if ($kode == null) {
+			$kodesesi = 'INV-' . date('YmdHis');;
+		} else {
+			$kodesesi = $kode;
+		}
 
 		$data = [
 			'kode' 		 	=> $kodesesi,
+			'barcode' 		=> $this->post('barcode'),
 			'id_user_pjm' 	=> $id_user_pjm,
-			'barcode' 		=> $this->post('barcode')
-
+			'tgl_pinjam'  	=> date('Y-m-d H:i:s'),
+			'tgl_kembali' 	=> date('Y-m-d H:i:s'),
+			'id_user' 	  	=> 0,
+			'keperluan'   	=> 0,
+			'status'  		=> 'addlist'
 		];
 
 
-		$query = $this->db->insert('peminjaman_temp', $data);
 
-		// if (!$cek) {
+		$cek = $this->db->query("SELECT * FROM peminjaman where kode = '" . $kodesesi . "'")->row_array();
 
-		// 	$this->db->insert('peminjaman', $data);
-		// } else {
-		// 	$this->db->insert('peminjaman', $data);
-		// }
+		if (!$cek) {
+
+			$this->db->insert('peminjaman', $data);
+		} else {
+			$this->db->insert('peminjaman', $data);
+		}
 
 		// echo $cek_sesi;
 		// echo $kodesesi;
 		//  $this->M_pinjam->ambilSession($data['id_user_pjm'])->kode;
-		//  $queryA = $this->db->insert($query,$queryy);
+		// $queryA = $this->db->insert($query,$queryy);
 
-		if ($query) {
+		// if ($queryA) {
 
-			$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
-		} else {
-			$this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
-		}
+		$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
+		// } else {
+		// 	$this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
+		// }
 	}
 
-	public function pinjam_delete($kode)
+	public function index_put()
 	{
-
 		#Set response API if Success
 		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success put data', 'data' => null);
 
 		#Set response API if Not Found
 		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data' => null);
-		$session = $this->db->query("SELECT kode From peminjaman where kode = '$kode' limit 1")->row_array();
 
-		$kode = $session['kode'];
+		$kode = $this->session->userdata('kode');
 		$tgl_pinjam = date('Y-m-d H:i:s');
 		$tgl_kembali = $this->put('tgl_kembali');
 		$id_user = 21;
@@ -107,7 +117,7 @@ class Pinjam extends REST_Controller
 
 		$query = $this->M_pinjam->put($kode, $tgl_pinjam, $tgl_kembali, $id_user, $keperluan, $status);
 
-		// $this->session->unset_userdata('kode');
+		$this->session->unset_userdata('kode');
 		if ($query) {
 			$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
 		} else {
