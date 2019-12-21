@@ -47,6 +47,7 @@ class Barang extends CI_Controller
         $barang->id_lokasi = null;
         $barang->sumber = null;
         $barang->tgl_masuk = null;
+        $barang->status = null;
 
         $kategori = $this->Kategori_m->get();
         $lokasi = $this->Lokasi_m->get();
@@ -106,7 +107,7 @@ class Barang extends CI_Controller
                     redirect('barang');
                 }
             }
- 
+
             // edit proses
         } else if (isset($_POST['edit'])) {
             if ($this->Barang_m->check_barcode($post['barcode'], $post['id'])->num_rows() > 0) {

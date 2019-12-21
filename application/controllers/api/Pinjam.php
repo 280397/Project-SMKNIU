@@ -25,7 +25,7 @@ class Pinjam extends REST_Controller
 		#Set response API if Not Found
 		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'fail get data', 'data' => null);
 
-		$query = $this->M_pinjam->get_data($barcode);
+		$query = $this->M_pinjam->get_data($barcode); 
 
 		if ($query) {
 			$response['SUCCESS']['data'] = $query;
@@ -44,10 +44,14 @@ class Pinjam extends REST_Controller
 		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data' => null);
 
 		$id_user_pjm = $this->post('id_user_pjm');
+		$barcode = $this->post('barcode');
 		// $kodesesi = 'INV-' . date('YmdHis');
 
 		$session = $this->M_pinjam->ambilSession($id_user_pjm);
 		$cek_sesi = $this->M_pinjam->cekSession($id_user_pjm);
+		$cek_barang = $this->db->query("SELECT * FROM barang WHERE barcode = '$barcode'")->row_array();
+		$cek_antian = $this->db->query("SELECT * FROM peminjaman_temp WHERE barcode = '$barcode'")->row_array();
+
 
 		if ($cek_sesi->sesi > 0) {
 			$kodesesi = $session->kode;
@@ -63,8 +67,12 @@ class Pinjam extends REST_Controller
 
 		];
 
+		if ($cek_barang['status'] == 'ready' && !$cek_antian) {
+			$query = $this->db->insert('peminjaman_temp', $data);
+		} else {
+			echo "heng keneng";
+		}
 
-		$query = $this->db->insert('peminjaman_temp', $data);
 
 		// if (!$cek) {
 
@@ -86,34 +94,7 @@ class Pinjam extends REST_Controller
 		}
 	}
 
-	public function pinjam_delete($kode)
-	{
 
-		#Set response API if Success
-		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success put data', 'data' => null);
-
-		#Set response API if Not Found
-		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data' => null);
-		$session = $this->db->query("SELECT kode From peminjaman where kode = '$kode' limit 1")->row_array();
-
-		$kode = $session['kode'];
-		$tgl_pinjam = date('Y-m-d H:i:s');
-		$tgl_kembali = $this->put('tgl_kembali');
-		$id_user = 21;
-		// $id_user = $this->put('id_user');
-		$keperluan = $this->put('keperluan');
-		$status = 'pinjam';
-
-
-		$query = $this->M_pinjam->put($kode, $tgl_pinjam, $tgl_kembali, $id_user, $keperluan, $status);
-
-		// $this->session->unset_userdata('kode');
-		if ($query) {
-			$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
-		} else {
-			$this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
-		}
-	}
 
 	public function ambil_get()
 	{

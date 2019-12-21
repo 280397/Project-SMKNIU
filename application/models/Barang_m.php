@@ -47,7 +47,8 @@ class Barang_m extends CI_Model
             'tgl_masuk' => $post['tgl_masuk'],
             'sumber' => $post['sumber'],
             'gambar' => $post['gambar'],
-            'created' => date('Y-m-d H:i:s')
+            'created' => date('Y-m-d H:i:s'),
+            'status' => 'ready'
         ];
         $this->db->insert('barang', $params);
     }
@@ -74,7 +75,8 @@ class Barang_m extends CI_Model
             'dtl_lokasi' => $post['dtl_lokasi'],
             'tgl_masuk' => $post['tgl_masuk'],
             'sumber' => $post['sumber'],
-            'updated' => date('Y-m-d H:i:s')
+            'updated' => date('Y-m-d H:i:s'),
+            'status' => 'ready'
         ];
         if ($post['gambar'] != null) {
             $params['gambar'] = $post['gambar'];
