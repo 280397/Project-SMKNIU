@@ -25,7 +25,7 @@ class Pinjam extends REST_Controller
 		#Set response API if Not Found
 		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'fail get data', 'data' => null);
 
-		$query = $this->M_pinjam->get_data($barcode); 
+		$query = $this->M_pinjam->get_data($barcode);
 
 		if ($query) {
 			$response['SUCCESS']['data'] = $query;
@@ -73,21 +73,9 @@ class Pinjam extends REST_Controller
 			echo "heng keneng";
 		}
 
-
-		// if (!$cek) {
-
-		// 	$this->db->insert('peminjaman', $data);
-		// } else {
-		// 	$this->db->insert('peminjaman', $data);
-		// }
-
-		// echo $cek_sesi;
-		// echo $kodesesi;
-		//  $this->M_pinjam->ambilSession($data['id_user_pjm'])->kode;
-		//  $queryA = $this->db->insert($query,$queryy);
-
 		if ($query) {
 
+			// $response['SUCCESS']['data'] = $query;
 			$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
 		} else {
 			$this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
