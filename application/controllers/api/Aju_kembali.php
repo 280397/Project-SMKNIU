@@ -44,12 +44,16 @@ class Aju_kembali extends REST_Controller
         $get_temp = $this->db->query("SELECT * From pengembalian_temp where id_user_pjm = '$id_user_pjm' ")->result_array();
         foreach ($get_temp as $temp) {
             $data = [
-                'tgl_aju_kembali'    => date('Y-m-d H:i:s'),
-                'id_admin'        => $this->input->post('id_admin'),
-                'status'        => 'kembali'
+                // 'barcode'               => $this->input->post('barcode'),
+                'tgl_kembali'           => date('Y-m-d H:i:s'),
+                'id_admin_kembali'      => $this->input->post('id_admin'),
+                'status'                => 'kembali'
             ];
             $this->db->update('barang', ['status' => 'ready'], ['barcode' => $temp['barcode']]);
-            $query = $this->db->update('peminjaman', $data);
+            $query = $this->db->update('peminjaman', $data, [
+                'barcode'   => $temp['barcode'],
+                'kode'      => $temp['kode']
+            ]);
         }
 
         $this->db->delete('pengembalian_temp', ['id_user_pjm' => $id_user_pjm]);

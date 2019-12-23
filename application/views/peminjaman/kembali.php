@@ -22,15 +22,15 @@
                                     <th scope="col">Kelas</th>
                                     <th scope="col">Kode</th>
                                     <th scope="col">Item</th>
-                                    <th scope="col">Tanggal Pinjam</th>
                                     <th scope="col">Pengajuan Pengembalian</th>
+                                    <th scope="col">Tanggal Kembali</th>
                                     <th scope="col">Admin</th>
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1;
-                                foreach ($pinjam as $data) { ?>
+                                foreach ($kembali as $data) { ?>
                                     <tr>
                                         <th scope="row" style="width:5%;"><?= $i; ?></th>
 
@@ -38,11 +38,11 @@
                                         <td><?= $data->kelas ?></td>
                                         <td><?= $data->kode ?></td>
                                         <td><?= $data->barcode ?></td>
-                                        <td><?= $data->tgl_pinjam ?></td>
                                         <td><?= $data->tgl_aju_kembali ?></td>
+                                        <td><?= $data->tgl_kembali ?></td>
                                         <td><?= $data->id_admin ?></td>
 
-                                        <td style="background-color: red; color:white;text-transform: capitalize;"><?= $data->status ?>
+                                        <td style="background-color: green; color:white;text-transform: capitalize;"><?= $data->status ?>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

@@ -29,7 +29,7 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
     <p>Stok Barang: <?= $count ?></p>
     <p>Date: <?php
                 $tgl = new DateTime();
-                echo $tgl->format('l, F jS, Y');
+                echo $tgl->format('l, F j, Y');
                 ?></p>
     <table style="width:100%">
 
@@ -51,19 +51,19 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
         <tbody>
             <?php $i = 1;
             foreach ($row->result() as $key => $data) { ?>
-            <tr>
-                <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
+                <tr>
+                    <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
-                <td><?= $data->barcode ?></td>
-                <td><?= $data->nk ?></td>
-                <td><?= $data->merk ?></td>
-                <td><?= $data->model ?></td>
-                <td><?= $data->k ?></td>
-                <td><?= $data->l ?></td>
+                    <td><?= $data->barcode ?></td>
+                    <td><?= $data->nk ?></td>
+                    <td><?= $data->merk ?></td>
+                    <td><?= $data->model ?></td>
+                    <td><?= $data->k ?></td>
+                    <td><?= $data->l ?></td>
 
 
-            </tr>
-            <?php $i++; ?>
+                </tr>
+                <?php $i++; ?>
             <?php } ?>
         </tbody>
     </table>
@@ -84,20 +84,20 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                 <tbody>
                     <?php $i = 1;
                     foreach ($kategori as $l) : ?>
-                    <tr>
-                        <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
+                        <tr>
+                            <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
-                        <td><?= $l['kategori'] ?></td>
-                        <td>
-                            <?php
+                            <td><?= $l['kategori'] ?></td>
+                            <td>
+                                <?php
                                 $idkategori = $l['id'];
                                 $sql = "SELECT barang.merk FROM barang WHERE barang.nama_barang = $idkategori";
                                 $query = $this->db->query($sql);
                                 echo $query->num_rows();
                                 ?>
-                        </td>
-                    </tr>
-                    <?php $i++; ?>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
                     <?php endforeach ?>
                 </tbody>
             </table>
@@ -117,20 +117,20 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                 <tbody>
                     <?php $i = 1;
                     foreach ($kondisi as $l) : ?>
-                    <tr>
-                        <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
+                        <tr>
+                            <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
-                        <td><?= $l['kondisi'] ?></td>
-                        <td>
-                            <?php
+                            <td><?= $l['kondisi'] ?></td>
+                            <td>
+                                <?php
                                 $idkondisi = $l['id'];
                                 $sql = "SELECT barang.merk FROM barang WHERE barang.id_kondisi = $idkondisi";
                                 $query = $this->db->query($sql);
                                 echo $query->num_rows();
                                 ?>
-                        </td>
-                    </tr>
-                    <?php $i++; ?>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
                     <?php endforeach ?>
                 </tbody>
             </table>

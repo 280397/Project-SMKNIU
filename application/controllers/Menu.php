@@ -39,7 +39,6 @@ class Menu extends CI_Controller
 		$data['menu'] = $this->menu->getMenuM();
 		// query data menu
 		$data['menu'] = $this->db->get('user_menu')->result_array();
-		$data['ikon'] = $this->db->get('user_menu')->result_array();
 
 
 		// rules

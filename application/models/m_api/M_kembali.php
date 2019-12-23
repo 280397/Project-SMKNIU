@@ -46,4 +46,10 @@ class M_kembali extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function hapus($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('pengembalian_temp', ['id' => $id]);
+        return $this->db->affected_rows();
+    }
 }

@@ -49,7 +49,7 @@ class Aju_pinjam extends REST_Controller
                 'id_user_pjm'     => $temp['id_user_pjm'],
                 'tgl_pinjam'    => date('Y-m-d H:i:s'),
                 // 'tgl_kembali'	=> '0000-00-00 00:00:00',
-                'tgl_kembali'    => $this->input->post('tgl_kembali'),
+                'tgl_aju_kembali'    => $this->input->post('tgl_aju_kembali'),
                 'id_admin'        => $this->input->post('id_admin'),
                 'keperluan'        =>    $this->input->post('keperluan'),
                 // 'keperluan'		=>	'ksahdjsadjjsa',

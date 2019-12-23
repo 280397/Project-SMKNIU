@@ -53,7 +53,7 @@ normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;font-family:
 normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;font-family:
 "Times New Roman","serif"'>TANGGAL : <?php
  $tgl = new DateTime();
- echo $tgl->format('l, F jS, Y');
+ echo $tgl->format('l, F j, Y');
  ?><o:p></o:p></span></p>
 
 <div class="pull-right">

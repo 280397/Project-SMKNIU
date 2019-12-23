@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+date_default_timezone_set('Asia/Jakarta');
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -24,9 +26,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = (isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'].
-						str_replace(basename($_SERVER['SCRIPT_NAME']),"",
-						$_SERVER['SCRIPT_NAME']);
+
+
+
+$config['base_url'] = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] .
+	str_replace(
+		basename($_SERVER['SCRIPT_NAME']),
+		"",
+		$_SERVER['SCRIPT_NAME']
+	);
 
 /*
 |--------------------------------------------------------------------------

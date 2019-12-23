@@ -90,4 +90,23 @@ class Kembali extends REST_Controller
             $this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
         }
     }
+
+    public function index_delete($id)
+    {
+
+        #Set response API if Success
+        $response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success delete data', 'data_kembali' => null);
+
+        #Set response API if Not Found
+        $response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'fail get data', 'data_kembali' => null);
+
+        $query = $this->M_kembali->hapus($id);
+
+        if ($query) {
+            $response['SUCCESS']['data_kembali'] = $query;
+            $this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
+        } else {
+            $this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
+        }
+    }
 }
