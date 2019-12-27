@@ -36,6 +36,7 @@
         $subMenu = $this->db->query($querySubMenu)->result_array();
 
         ?>
+        <!-- dropdown -->
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -8,6 +8,7 @@
         <!-- DataTables Example -->
         <div class="card mb-3">
             <div class="card-header">
+                Item : <?= $countk ?>
             </div>
             <div class="card-body">
 
@@ -22,8 +23,8 @@
                                     <th scope="col">Kelas</th>
                                     <th scope="col">Kode</th>
                                     <th scope="col">Item</th>
-                                    <th scope="col">Pengajuan Pengembalian</th>
-                                    <th scope="col">Tanggal Kembali</th>
+                                    <th scope="col">Pengajuan</th>
+                                    <th scope="col">Tgl Kembali</th>
                                     <th scope="col">Admin</th>
                                     <th scope="col">Status</th>
                                 </tr>

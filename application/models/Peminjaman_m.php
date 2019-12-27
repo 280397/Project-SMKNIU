@@ -41,4 +41,17 @@ class Peminjaman_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    public function get_count()
+    {
+        $count = 'SELECT count(barcode) as stok from peminjaman WHERE peminjaman.status = "pinjam"';
+        $result = $this->db->query($count);
+        return $result->row()->stok;
+    }
+    public function get_countk()
+    {
+        $count = 'SELECT count(barcode) as stok from peminjaman WHERE peminjaman.status = "kembali"';
+        $result = $this->db->query($count);
+        return $result->row()->stok;
+    }
 }

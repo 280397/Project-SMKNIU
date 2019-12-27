@@ -20,6 +20,8 @@ class Peminjaman extends CI_Controller
 
         // query data menu
         $data['pinjam'] = $this->Peminjaman_m->get();
+        $data['count'] = $this->Peminjaman_m->get_count();
+
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
@@ -37,6 +39,7 @@ class Peminjaman extends CI_Controller
 
         // query data menu
         $data['kembali'] = $this->Peminjaman_m->getk();
+        $data['countk'] = $this->Peminjaman_m->get_countk();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);

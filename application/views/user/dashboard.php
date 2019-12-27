@@ -30,6 +30,13 @@
                         <div class="card-body-icon">
                             <i class="fas fa-fw fa-list"></i>
                         </div>
+                        <h3>
+                            <?php
+                            $sql = 'SELECT peminjaman.barcode FROM peminjaman WHERE peminjaman.status = "pinjam"';
+                            $query = $this->db->query($sql);
+                            echo $query->num_rows();
+                            ?>
+                        </h3>
                         <div class="mr-5">Peminjaman!</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="<?= base_url('peminjaman') ?>">
