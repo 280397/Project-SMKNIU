@@ -18,7 +18,7 @@ class Kembali extends REST_Controller
 
     public function index_get()
     {
-        $barcode = $this->get('barcode');
+        $barcode = $this->get('id_user_pjm');
         #Set response API if Success
         $response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success get data', 'data_kembali' => null);
 
@@ -26,13 +26,29 @@ class Kembali extends REST_Controller
         $response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'fail get data', 'data_kembali' => null);
 
         $query = $this->M_kembali->get_data($barcode);
+        $queryy = $this->M_kembali->get_dataa($barcode);
 
-        if ($query) {
-            $response['SUCCESS']['data_kembali'] = $query;
-            $this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
-        } else {
-            $this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
+        $sekarang   = date('Y-m-d');
+        $tanggal   = $query['tgl_pinjam'];
+        $date1      = new DateTime($sekarang);
+        $date2      = new DateTime($tanggal);
+        $interval   = $date1->diff($date2);
+        $usia       = $interval->d;
+        $hasil = 0;
+        foreach ($queryy as $data) {
+            // echo $data['nama_barang'] .
+            $kali = $data['denda'] * $usia;
+            $jumlah = $hasil += $kali;
         }
+        echo $jumlah;
+
+        // echo $usia;
+        // if ($usia) {
+        //     $response['SUCCESS']['data_kembali'] = $usia;
+        //     $this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
+        // } else {
+        //     $this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
+        // }
     }
 
     public function index_post()

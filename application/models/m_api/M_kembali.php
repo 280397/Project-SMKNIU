@@ -14,10 +14,24 @@ class M_kembali extends CI_Model
         $this->db->join('barang', 'barang.barcode=peminjaman.barcode');
         $this->db->join('barang_kategori', 'barang_kategori.id=barang.nama_barang');
         // $this->db->Where('id_user_pjm', $id_user_pjm);
-        $this->db->Where('peminjaman.barcode', $barcode);
+        $this->db->Where('peminjaman.id_user_pjm', $barcode);
+        // $this->db->Where('peminjaman.barcode', $barcode);
         $this->db->Where('peminjaman.status', 'pinjam');
         $query = $this->db->get();
-        return $query->result();
+        return $query->row_array();
+    }
+    public function get_dataa($barcode)
+    {
+        $this->db->select('peminjaman.*,barang_kategori.kategori as nama_barang');
+        $this->db->from('peminjaman');
+        $this->db->join('barang', 'barang.barcode=peminjaman.barcode');
+        $this->db->join('barang_kategori', 'barang_kategori.id=barang.nama_barang');
+        // $this->db->Where('id_user_pjm', $id_user_pjm);
+        $this->db->Where('peminjaman.id_user_pjm', $barcode);
+        // $this->db->Where('peminjaman.barcode', $barcode);
+        $this->db->Where('peminjaman.status', 'pinjam');
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function post_data($barcode, $kode, $id_user_pjm)
