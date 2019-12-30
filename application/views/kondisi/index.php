@@ -28,23 +28,22 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 <?php foreach ($kondisi as $k) : ?>
-                                <tr>
-                                    <th scope="row" style="width:5%;"><?= $i; ?></th>
-                                    <td><?= $k['kondisi']; ?></td>
-                                    <?php $idkondisi = $k['id'] ?>
-                                    <td><?php
-                                            $sql = "SELECT barang.merk FROM barang WHERE barang.id_kondisi = $idkondisi";
-                                            $query = $this->db->query($sql);
-                                            echo $query->num_rows();
+                                    <tr>
+                                        <th scope="row" style="width:5%;"><?= $i; ?></th>
+                                        <td><?= $k['kondisi']; ?></td>
+                                        <?php $idkondisi = $k['kondisi'] ?>
+                                        <td><?php
+                                            $query = $this->db->query("SELECT COUNT(barang.id_kondisi) as total, barang.merk FROM barang WHERE barang.id_kondisi = '$idkondisi'")->row_array();
+                                            echo $query['total'];
                                             ?>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-small btn-primary" data-target="<?= $k['id'] ?>" href="<?= base_url('kondisi/indexkondisi/' . $k['id']); ?>"><i class="fas fa-info-circle"></i></a>
-                                        <!-- <a class="btn btn-small btn-warning" data-target="<?= $k['id'] ?>" href="<?= base_url('kondisi/editkondisi/' . $k['id']); ?>"><i class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-small btn-primary" data-target="<?= $k['id'] ?>" href="<?= base_url('kondisi/indexkondisi/' . $k['id']); ?>"><i class="fas fa-info-circle"></i></a>
+                                            <!-- <a class="btn btn-small btn-warning" data-target="<?= $k['id'] ?>" href="<?= base_url('kondisi/editkondisi/' . $k['id']); ?>"><i class="fas fa-edit"></i></a>
                                         <a class="btn btn-small btn-danger" href="<?= base_url('kondisi/hapuskondisi/' . $k['id']); ?>"><i class="fas fa-trash"></i></a> -->
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>

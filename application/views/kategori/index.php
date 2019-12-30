@@ -32,23 +32,22 @@
                             <tbody class="text-center">
                                 <?php $i = 1; ?>
                                 <?php foreach ($kategori as $l) : ?>
-                                <tr>
-                                    <th scope="row" style="width:5%;"><?= $i; ?></th>
-                                    <td><?= $l['kategori']; ?></td>
-                                    <?php $idkategori = $l['id'] ?>
-                                    <td><?php
-                                            $sql = "SELECT barang.merk FROM barang WHERE barang.nama_barang = $idkategori";
-                                            $query = $this->db->query($sql);
-                                            echo $query->num_rows();
+                                    <tr>
+                                        <th scope="row" style="width:5%;"><?= $i; ?></th>
+                                        <td><?= $l['kategori']; ?></td>
+                                        <?php $idkategori = $l['kategori'] ?>
+                                        <td><?php
+                                            $query = $this->db->query("SELECT COUNT(barang.nama_barang) as total, barang.merk FROM barang WHERE barang.nama_barang = '$idkategori'")->row_array();
+                                            echo $query['total'];
                                             ?>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-small btn-primary" data-target="<?= $l['id'] ?>" href="<?= base_url('kategori/indexkategori/' . $l['id']); ?>"><i class="fas fa-info-circle"></i></a>
-                                        <a class="btn btn-small btn-warning" data-target="<?= $l['id'] ?>" href="<?= base_url('kategori/editkategori/' . $l['id']); ?>"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-small btn-danger" href="<?= base_url('kategori/hapuskategori/' . $l['id']); ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-small btn-primary" data-target="<?= $l['id'] ?>" href="<?= base_url('kategori/indexkategori/' . $l['id']); ?>"><i class="fas fa-info-circle"></i></a>
+                                            <a class="btn btn-small btn-warning" data-target="<?= $l['id'] ?>" href="<?= base_url('kategori/editkategori/' . $l['id']); ?>"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-small btn-danger" href="<?= base_url('kategori/hapuskategori/' . $l['id']); ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>

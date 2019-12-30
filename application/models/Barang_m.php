@@ -11,7 +11,7 @@ class Barang_m extends CI_Model
         // $this->db->join('barang_lokasi', 'barang_lokasi.id=barang.id_lokasi');
         $this->db->from('barang');
 
-        $query = $this->db->get();
+        $query = $this->db->get()->result();
         return $query;
     }
 

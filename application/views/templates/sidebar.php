@@ -14,7 +14,7 @@
     $menu = $this->db->query($queryMenu)->result_array();
     ?>
     <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('user/dashboard'); ?>">
+        <a class="nav-link" href="<?= base_url('User/dashboard'); ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>

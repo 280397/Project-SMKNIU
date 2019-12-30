@@ -14,9 +14,9 @@
 
                 <?= $this->session->flashdata('message'); ?>
                 <div class="table-responsive">
-                    <a class="btn btn-primary mb-3 col-sm-2" href="<?= base_url('barang/add'); ?>"><i class="fas fa-plus"></i> Tambah barang
+                    <a class="btn btn-primary mb-3 col-sm-2" href="<?= base_url('Barang/add'); ?>"><i class="fas fa-plus"></i> Tambah barang
                     </a>
-                    <a class="btn btn-warning mb-3" target="_blank" href="<?= base_url('barang/printAll'); ?>"><i class="fas fa-print"></i> Print
+                    <a class="btn btn-warning mb-3" target="_blank" href="<?= base_url('Barang/printAll'); ?>"><i class="fas fa-print"></i> Print
                     </a>
 
                     <div id="example1_wrapper" class="dataTables_wrapper ">
@@ -37,12 +37,12 @@
                             </thead>
                             <tbody>
                                 <?php $i = 1;
-                                foreach ($row->result() as $key => $data) { ?>
+                                foreach ($row as $key => $data) { ?>
                                     <tr>
                                         <th scope="row" style="width:5%;"><?= $i; ?></th>
                                         <td>
                                             <?= $data->barcode ?><br>
-                                            <a class="btn btn-small btn-default" data-target="<?= $data->id ?>" href="<?= base_url('barang/barcode_qrcode/' . $data->id) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a>
+                                            <a class="btn btn-small btn-default" data-target="<?= $data->id ?>" href="<?= base_url('Barang/barcode_qrcode/' . $data->id) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a>
                                         </td>
                                         <td><?= $data->nama_barang ?></td>
                                         <td><?= $data->merk ?></td>
@@ -55,9 +55,9 @@
                                             <?php } ?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-small btn-success" data-target="<?= $data->id ?>" href="<?= base_url('barang/detail/' . $data->id) ?>"><i class="fas fa-eye"></i></a>
-                                            <a class="btn btn-small btn-warning" data-target="<?= $data->id ?>" href="<?= base_url('barang/editbarang/' . $data->id) ?>"><i class="fas fa-edit"></i></a>
-                                            <a class="btn btn-small btn-danger" href="<?= base_url('barang/hapusbarang/' . $data->id) ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
+                                            <a class="btn btn-small btn-success" data-target="<?= $data->id ?>" href="<?= base_url('Barang/detail/' . $data->id) ?>"><i class="fas fa-eye"></i></a>
+                                            <a class="btn btn-small btn-warning" data-target="<?= $data->id ?>" href="<?= base_url('Barang/editbarang/' . $data->id) ?>"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-small btn-danger" href="<?= base_url('Barang/hapusbarang/' . $data->id) ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

@@ -123,7 +123,7 @@ class Kategori extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
-            redirect('kategori');
+            redirect('Kategori');
         }
     }
 }
