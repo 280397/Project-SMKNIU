@@ -38,29 +38,29 @@
                             <tbody>
                                 <?php $i = 1;
                                 foreach ($row->result() as $key => $data) { ?>
-                                <tr>
-                                    <th scope="row" style="width:5%;"><?= $i; ?></th>
-                                    <td>
-                                        <?= $data->barcode ?><br>
-                                        <a class="btn btn-small btn-default" data-target="<?= $data->id ?>" href="<?= base_url('barang/barcode_qrcode/' . $data->id) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a>
-                                    </td>
-                                    <td><?= $data->nk ?></td>
-                                    <td><?= $data->merk ?></td>
-                                    <td><?= $data->model ?></td>
-                                    <td><?= $data->k ?></td>
-                                    <td><?= $data->l ?></td>
-                                    <td>
-                                        <?php if ($data->gambar != null) { ?>
-                                        <img src="<?= base_url('assets/img/barang/' . $data->gambar) ?>" alt="" style="width:100px">
-                                        <?php } ?>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-small btn-success" data-target="<?= $data->id ?>" href="<?= base_url('barang/detail/' . $data->id) ?>"><i class="fas fa-eye"></i></a>
-                                        <a class="btn btn-small btn-warning" data-target="<?= $data->id ?>" href="<?= base_url('barang/editbarang/' . $data->id) ?>"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-small btn-danger" href="<?= base_url('barang/hapusbarang/' . $data->id) ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
+                                    <tr>
+                                        <th scope="row" style="width:5%;"><?= $i; ?></th>
+                                        <td>
+                                            <?= $data->barcode ?><br>
+                                            <a class="btn btn-small btn-default" data-target="<?= $data->id ?>" href="<?= base_url('barang/barcode_qrcode/' . $data->id) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a>
+                                        </td>
+                                        <td><?= $data->nama_barang ?></td>
+                                        <td><?= $data->merk ?></td>
+                                        <td><?= $data->model ?></td>
+                                        <td><?= $data->id_kondisi ?></td>
+                                        <td><?= $data->id_lokasi ?></td>
+                                        <td>
+                                            <?php if ($data->gambar != null) { ?>
+                                                <img src="<?= base_url('assets/img/barang/' . $data->gambar) ?>" alt="" style="width:100px">
+                                            <?php } ?>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-small btn-success" data-target="<?= $data->id ?>" href="<?= base_url('barang/detail/' . $data->id) ?>"><i class="fas fa-eye"></i></a>
+                                            <a class="btn btn-small btn-warning" data-target="<?= $data->id ?>" href="<?= base_url('barang/editbarang/' . $data->id) ?>"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-small btn-danger" href="<?= base_url('barang/hapusbarang/' . $data->id) ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
                                 <?php } ?>
                             </tbody>
                         </table>

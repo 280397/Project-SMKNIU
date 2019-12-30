@@ -22,11 +22,13 @@ class M_auth extends CI_Model
 
 	public function get_alldata()
 	{
-		$this->db->select('barang.*,barang_kondisi.kondisi as id_kondisi,barang_lokasi.lokasi as id_lokasi, barang_kategori.kategori as nama_barang');
+		$this->db->select('barang.*');
 		$this->db->from('barang');
-		$this->db->join('barang_kategori', 'barang_kategori.id=barang.nama_barang');
-		$this->db->join('barang_kondisi', 'barang_kondisi.id=barang.id_kondisi');
-		$this->db->join('barang_lokasi', 'barang_lokasi.id=barang.id_lokasi');
+		// $this->db->select('barang.*,barang_kondisi.kondisi as id_kondisi,barang_lokasi.lokasi as id_lokasi, barang_kategori.kategori as nama_barang');
+		// $this->db->from('barang');
+		// $this->db->join('barang_kategori', 'barang_kategori.id=barang.nama_barang');
+		// $this->db->join('barang_kondisi', 'barang_kondisi.id=barang.id_kondisi');
+		// $this->db->join('barang_lokasi', 'barang_lokasi.id=barang.id_lokasi');
 
 		$this->db->order_by('barcode', 'desc');
 		$query = $this->db->get();
