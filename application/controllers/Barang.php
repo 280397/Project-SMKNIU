@@ -8,8 +8,8 @@ class Barang extends CI_Controller
     {
         parent::__construct();
         $this->load->model(['Barang_m', 'Lokasi_m', 'Kondisi_m', 'Kategori_m']);
-        $this->load->library('form_validation');
-        $this->load->helper('form');
+        $this->load->library('excel');
+        $this->load->helper(array('url', 'html', 'form'));
     }
 
     public function index()
@@ -266,5 +266,57 @@ class Barang extends CI_Controller
         // $data['row'] = $this->Barang_m->get();
         $html  = $this->load->view('barang/printall_n', $data, true);
         $this->fungsi->PdfGenerator($html, 'Print All', 'A4', 'potrait');
+    }
+
+
+    public function saveimport()
+    {
+        if (!isset($_FILES["file"]["name"])) {
+
+            //upload gagal
+            $this->session->set_flashdata('notif', '<div class="alert alert-danger"><b>PROSES IMPORT GAGAL!</b> ' . $this->upload->display_errors() . '</div>');
+            //redirect halaman
+            redirect('Barang');
+        } else {
+            $path = $_FILES["file"]["tmp_name"];
+            $object = PHPExcel_IOFactory::load($path);
+            // $fileName = 'data-' . time() . '.xlsx';
+            // var_dump($object);
+            // die;
+            foreach ($object->getWorksheetIterator() as $worksheet) {
+
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                // $cellIterator = $worksheet->getActiveCell();
+                // $cellIterator->setIterateOnlyExistingCells(FALSE);
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    $barcode = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    $name = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                    $merk = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $model = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $kondisi = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $lokasi = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $detail = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                    $tgl = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                    $sumber = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                    $status = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                    $data[] = array(
+                        'barcode'       => $barcode,
+                        'nama_barang'   => $name,
+                        'merk'          => $merk,
+                        'model'         => $model,
+                        'kondisi'       => $kondisi,
+                        'lokasi'        => $lokasi,
+                        'detail'        => $detail,
+                        'tgl_masuk'     => PHPExcel_Style_NumberFormat::toFormattedString($tgl, 'YYYY-MM-DD'),
+                        'sumber'        => $sumber,
+                        'status'        => $status
+                    );
+                }
+            }
+            $this->Barang_m->insertimport($data);
+            $this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
+            redirect('Barang');
+        }
     }
 }

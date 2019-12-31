@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style>
         table,
         th,
@@ -55,11 +56,11 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                     <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
                     <td><?= $data->barcode ?></td>
-                    <td><?= $data->nk ?></td>
+                    <td><?= $data->nama_barang ?></td>
                     <td><?= $data->merk ?></td>
                     <td><?= $data->model ?></td>
-                    <td><?= $data->k ?></td>
-                    <td><?= $data->l ?></td>
+                    <td><?= $data->id_kondisi ?></td>
+                    <td><?= $data->id_lokasi ?></td>
 
 
                 </tr>
@@ -90,10 +91,10 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                             <td><?= $l['kategori'] ?></td>
                             <td>
                                 <?php
-                                $idkategori = $l['id'];
-                                $sql = "SELECT barang.merk FROM barang WHERE barang.nama_barang = $idkategori";
-                                $query = $this->db->query($sql);
-                                echo $query->num_rows();
+                                $idkategori = $l['kategori'];
+                                $query = $this->db->query("SELECT COUNT(barang.nama_barang) as total, barang.merk FROM barang WHERE barang.nama_barang = '$idkategori'")->row_array();
+                                echo $query['total'];
+
                                 ?>
                             </td>
                         </tr>
@@ -123,10 +124,9 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                             <td><?= $l['kondisi'] ?></td>
                             <td>
                                 <?php
-                                $idkondisi = $l['id'];
-                                $sql = "SELECT barang.merk FROM barang WHERE barang.id_kondisi = $idkondisi";
-                                $query = $this->db->query($sql);
-                                echo $query->num_rows();
+                                $idkondisi = $l['kondisi'];
+                                $query = $this->db->query("SELECT COUNT(barang.id_kondisi) as total, barang.merk FROM barang WHERE barang.id_kondisi = '$idkondisi'")->row_array();
+                                echo $query['total'];
                                 ?>
                             </td>
                         </tr>

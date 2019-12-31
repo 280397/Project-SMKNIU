@@ -1,8 +1,29 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 class Barang_m extends CI_Model
 {
+    private $_batchImport;
+
+    public function setBatchImport($batchImport)
+    {
+        $this->_batchImport = $batchImport;
+    }
+
+    // save data
+    public function importData()
+    {
+        $data = $this->_batchImport;
+        $this->db->insert_batch('barang', $data);
+    }
+    function insertimport($data)
+    {
+        $this->db->insert_batch('barang', $data);
+        return $this->db->insert_id();
+    }
+
     public function get()
     {
         $this->db->select('barang.*');
@@ -11,7 +32,7 @@ class Barang_m extends CI_Model
         // $this->db->join('barang_lokasi', 'barang_lokasi.id=barang.id_lokasi');
         $this->db->from('barang');
 
-        $query = $this->db->get()->result();
+        $query = $this->db->get();
         return $query;
     }
 

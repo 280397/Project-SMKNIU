@@ -143,19 +143,6 @@ class Lokasi extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // function barcode_print($id)
-    // {
-    //     $data['row'] = $this->Lokasi_m->getId($id)->row();
-    //     $html  = $this->load->view('lokasi/barcode_print', $data, true);
-    //     $this->fungsi->PdfGenerator($html, 'barcode-' . $data['row']->barcode, 'A4', 'landscape');
-    // }
-    // function qrcode_print($id)
-    // {
-    //     $data['row'] = $this->Lokasi_m->getId($id)->row();
-    //     $html  = $this->load->view('lokasi/qrcode_print', $data, true);
-    //     $this->fungsi->PdfGenerator($html, 'qrcode-' . $data['row']->barcode, 'A4', 'potrait');
-    // }
-
     public function hapusbarang($barcode = null)
     {
         //replace image

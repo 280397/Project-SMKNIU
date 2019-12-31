@@ -11,10 +11,24 @@
                 Stok barang : <?= $count ?>
             </div>
             <div class="card-body">
+                <?php if (form_error('fileURL')) { ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <?php print form_error('fileURL'); ?>
+                    </div>
+                <?php } ?>
 
+                <?= $this->session->flashdata('notif'); ?>
+                <?php if (validation_errors()) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= validation_errors(); ?>
+                    </div>
+                <?php endif; ?>
                 <?= $this->session->flashdata('message'); ?>
                 <div class="table-responsive">
                     <a class="btn btn-primary mb-3 col-sm-2" href="<?= base_url('Barang/add'); ?>"><i class="fas fa-plus"></i> Tambah barang
+                    </a>
+                    <a class="btn btn-success mb-3 col-sm-2" href="" data-toggle="modal" data-target="#Import"><i class="fas fa-plus"></i> Import Excel
                     </a>
                     <a class="btn btn-warning mb-3" target="_blank" href="<?= base_url('Barang/printAll'); ?>"><i class="fas fa-print"></i> Print
                     </a>
@@ -37,7 +51,7 @@
                             </thead>
                             <tbody>
                                 <?php $i = 1;
-                                foreach ($row as $key => $data) { ?>
+                                foreach ($row->result() as $key => $data) { ?>
                                     <tr>
                                         <th scope="row" style="width:5%;"><?= $i; ?></th>
                                         <td>
@@ -68,5 +82,35 @@
                 </div>
             </div>
             <div class="card-footer small text-muted">Updated <?= date('Y-m-d H:i:s') ?></div>
+        </div>
+    </div>
+
+
+
+    <!-- import -->
+    <div class=" modal fade" id="Import" tabindex="-1" role="dialog" aria-labelledby="Import" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Import"><?= $title ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="<?= base_url() ?>Barang/saveimport" method="post" enctype="multipart/form-data" id="import_form">
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="file" required accept=".xls, .xlsx">
+                            <label for="file" class="custom-file-label">Choose file</label>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="import" value="Import" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
