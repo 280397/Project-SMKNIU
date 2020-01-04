@@ -31,10 +31,11 @@
                                     <tr>
                                         <th scope="row" style="width:5%;"><?= $i; ?></th>
                                         <td><?= $k['kondisi']; ?></td>
-                                        <?php $idkondisi = $k['kondisi'] ?>
+                                        <?php $idkondisi = $k['id'] ?>
                                         <td><?php
-                                            $query = $this->db->query("SELECT COUNT(barang.id_kondisi) as total, barang.merk FROM barang WHERE barang.id_kondisi = '$idkondisi'")->row_array();
-                                            echo $query['total'];
+                                            $sql = "SELECT barang.merk FROM barang WHERE barang.id_kondisi = $idkondisi";
+                                            $query = $this->db->query($sql);
+                                            echo $query->num_rows();
                                             ?>
                                         </td>
                                         <td>

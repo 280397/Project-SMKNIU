@@ -12,13 +12,13 @@ class Lokasi extends CI_Controller
         $this->load->helper('form');
     }
 
-
     public function index()
     {
         // ambil data user pada session
         $dataa['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
-        // query data menu
+        // query data 
+
         $lokasi = new stdClass();
         $lokasi->id = null;
         $lokasi->lokasi = null;
@@ -32,7 +32,7 @@ class Lokasi extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $dataa);
         $this->load->view('templates/sidebar', $dataa);
-        $this->load->view('templates/breadcumb', $dataa);
+        $this->load->view('templates/breadcumb', $data);
         $this->load->view('lokasi/index', $data);
         $this->load->view('templates/footer');
     }
@@ -51,6 +51,7 @@ class Lokasi extends CI_Controller
         $this->load->view('lokasi/lokasi_index', $data);
         $this->load->view('templates/footer');
     }
+
     public function add()
     {
         // ambil data user pada session
@@ -61,7 +62,7 @@ class Lokasi extends CI_Controller
         $lokasi->id = null;
         $lokasi->lokasi = null;
         $data = array(
-            'title' => 'Tambah Lokasi',
+            'title' => 'Tambah lokasi',
             'page' => 'add',
             'row' => $lokasi
         );
@@ -69,6 +70,7 @@ class Lokasi extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $dataa);
         $this->load->view('templates/sidebar', $dataa);
+        $this->load->view('templates/breadcumb', $data);
         $this->load->view('lokasi/tambah', $data);
         $this->load->view('templates/footer');
     }
@@ -86,16 +88,16 @@ class Lokasi extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
         }
 
-        redirect('lokasi');
+        redirect('Lokasi');
     }
 
     // hapus lokasi
     public function hapuslokasi($id = null)
     {
-        // $this->load->model('Lokasi_m');
-        $this->Lokasi_m->hapusLokasi($id);
+        // $this->load->model('lokasi_m');
+        $this->Lokasi_m->hapuslokasi($id);
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data dihapus!</div>');
-        redirect('lokasi');
+        redirect('Lokasi');
     }
 
 
@@ -109,53 +111,19 @@ class Lokasi extends CI_Controller
         if ($query->num_rows() > 0) {
             $lokasi = $query->row();
             $data = array(
-                'title' => 'Edit Lokasi',
+                'title' => 'Edit lokasi',
                 'page' => 'edit',
                 'row' => $lokasi
             );
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $dataa);
             $this->load->view('templates/sidebar', $dataa);
-            $this->load->view('templates/breadcumb', $dataa);
+            $this->load->view('templates/breadcumb', $data);
             $this->load->view('lokasi/tambah', $data);
             $this->load->view('templates/footer');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data tidak ditemukan!</div>');
-            redirect('lokasi');
+            redirect('Lokasi');
         }
-    }
-
-    function barcode_qrcode($id)
-    {
-        $data['titl'] = 'Generator';
-        $data['title'] = 'Barcode Generator';
-        $data['title1'] = 'QR-Code Generator';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-
-        // query data menu
-        $dataa['row'] = $this->Lokasi_m->getId($id)->row();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/breadcumb', $data);
-        $this->load->view('lokasi/barcode_qrcode', $dataa);
-        $this->load->view('templates/footer');
-    }
-
-    public function hapusbarang($barcode = null)
-    {
-        //replace image
-        $barang = $this->Lokasi_m->getId($barcode)->row();
-        if ($barang->gambar != null) {
-            $target_file = './assets/img/barang/' . $barang->gambar;
-
-            unlink($target_file);
-            // unlink($target_file_qrcode);
-        }
-
-        $this->Barang_m->hapusbarang($barcode);
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data dihapus!</div>');
-        redirect('lokasi/indexlokasi/');
     }
 }

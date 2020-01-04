@@ -8,13 +8,14 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
+
                 <?= $title; ?></div>
             <div class="card-body">
                 <?= $this->session->flashdata('message'); ?>
                 <div class="table-responsive">
 
                     <div id="example1_wrapper" class="dataTables_wrapper ">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>

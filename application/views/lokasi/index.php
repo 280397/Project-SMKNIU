@@ -18,10 +18,10 @@
             <div class="card-body">
                 <?= $this->session->flashdata('message'); ?>
                 <div class="table-responsive">
-                    <a href="<?= base_url('lokasi/add') ?>" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newLokasiModal" class="btn btn-primary mb-3"><i class="fas fa-plus"></i>Tambah Lokasi</a>
+                    <a href="<?= base_url('Lokasi/add') ?>" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newLokasiModal" class="btn btn-primary mb-3"><i class="fas fa-plus"></i>Tambah Lokasi</a>
                     <div id="example1_wrapper" class="dataTables_wrapper ">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
+                            <thead class="text-center">
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Lokasi</th>
@@ -29,22 +29,23 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 <?php $i = 1; ?>
                                 <?php foreach ($lokasi as $l) : ?>
-                                    <?php $idlokasi = $l['lokasi'] ?>
                                     <tr>
                                         <th scope="row" style="width:5%;"><?= $i; ?></th>
-                                        <td><?= $l['lokasi'] ?></td>
+                                        <td><?= $l['lokasi']; ?></td>
+                                        <?php $idlokasi = $l['id'] ?>
                                         <td><?php
-                                            $query = $this->db->query("SELECT COUNT(barang.id_lokasi) as total, barang.merk FROM barang WHERE barang.id_lokasi = '$idlokasi'")->row_array();
-                                            echo $query['total'];
+                                            $sql = "SELECT barang.merk FROM barang WHERE barang.id_lokasi = $idlokasi";
+                                            $query = $this->db->query($sql);
+                                            echo $query->num_rows();
                                             ?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-small btn-primary" data-target="<?= $l['id'] ?>" href="<?= base_url('lokasi/indexlokasi/' . $l['id']); ?>"><i class="fas fa-info-circle"></i></a>
-                                            <a class="btn btn-small btn-warning" data-target="<?= $l['id'] ?>" href="<?= base_url('lokasi/editlokasi/' . $l['id']); ?>"><i class="fas fa-edit"></i></a>
-                                            <a class="btn btn-small btn-danger" href="<?= base_url('lokasi/hapuslokasi/' . $l['id']); ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
+                                            <a class="btn btn-small btn-primary" data-target="<?= $l['id'] ?>" href="<?= base_url('Lokasi/indexlokasi/' . $l['id']); ?>"><i class="fas fa-info-circle"></i></a>
+                                            <a class="btn btn-small btn-warning" data-target="<?= $l['id'] ?>" href="<?= base_url('Lokasi/editlokasi/' . $l['id']); ?>"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-small btn-danger" href="<?= base_url('Lokasi/hapuslokasi/' . $l['id']); ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>
@@ -58,20 +59,21 @@
     </div>
 
     <!-- Modal -->
-    <!-- tambah lokasi -->
+    <!-- tambah Lokasi -->
     <div class=" modal fade" id="newLokasiModal" tabindex="-1" role="dialog" aria-labelledby="newLokasiModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newLokasiModalLabel">Tambah lokasi</h5>
+                    <h5 class="modal-title" id="newLokasiModalLabel">Tambah Lokasi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('lokasi/process'); ?>" method="post">
+                <form action="<?= base_url('Lokasi/process'); ?>" method="post">
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Lokasi" required="required" autofocus="autofocus">
+                            <label for="lokasi">Lokasi</label>
+                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi" required="required" autofocus="autofocus">
                         </div>
 
                     </div>

@@ -26,10 +26,10 @@ class Barang_m extends CI_Model
 
     public function get()
     {
-        $this->db->select('barang.*');
-        // $this->db->join('barang_kategori', 'barang_kategori.id=barang.nama_barang');
-        // $this->db->join('barang_kondisi', 'barang_kondisi.id=barang.id_kondisi');
-        // $this->db->join('barang_lokasi', 'barang_lokasi.id=barang.id_lokasi');
+        $this->db->select('barang.*, barang_kategori.kategori as nk, barang_kondisi.kondisi as k, barang_lokasi.lokasi as l');
+        $this->db->join('barang_kategori', 'barang_kategori.id=barang.nama_barang');
+        $this->db->join('barang_kondisi', 'barang_kondisi.id=barang.id_kondisi');
+        $this->db->join('barang_lokasi', 'barang_lokasi.id=barang.id_lokasi');
         $this->db->from('barang');
 
         $query = $this->db->get();

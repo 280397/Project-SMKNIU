@@ -4,10 +4,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Kategori_m extends CI_Model
 {
 
-    public function getbarang($kategori)
+    public function getbarang($id)
     {
 
-        $q = $this->db->query("SELECT * FROM barang a join barang_lokasi b on a.id_lokasi = b.lokasi join barang_kategori c on a.nama_barang = c.kategori join barang_kondisi d on a.id_kondisi = d.kondisi where a.nama_barang = '" . $kategori . "' group by a.id")->result_array();
+        $q = $this->db->query("SELECT * FROM barang a join barang_lokasi b on a.id_lokasi = b.id join barang_kategori c on a.nama_barang = c.id join barang_kondisi d on a.id_kondisi = d.id where a.nama_barang = '" . $id . "' group by a.id")->result_array();
         return $q;
     }
 

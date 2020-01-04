@@ -21,7 +21,7 @@
                     <select name="nama_barang" id="nama_barang" class="form-control" required="required" autofocus="autofocus">
                         <option value="">--Pilih kategori--</option>
                         <?php foreach ($kategori->result() as $key => $data) { ?>
-                            <option value="<?= $data->kategori ?>" <?= $data->kategori == $row->nama_barang ? "selected" : null ?>><?= $data->kategori ?></option>
+                            <option value="<?= $data->id ?>" <?= $data->id == $row->nama_barang ? "selected" : null ?>><?= $data->kategori ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -42,7 +42,7 @@
                     <select name="id_kondisi" id="id_kondisi" class="form-control" required="required" autofocus="autofocus">
                         <option value="">--Pilih kondisi--</option>
                         <?php foreach ($kondisi->result() as $key => $data) { ?>
-                            <option value="<?= $data->kondisi ?>" <?= $data->kondisi == $row->id_kondisi ? "selected" : null ?>><?= $data->kondisi ?></option>
+                            <option value="<?= $data->id ?>" <?= $data->id == $row->id_kondisi ? "selected" : null ?>><?= $data->kondisi ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -51,7 +51,7 @@
                     <select name="id_lokasi" id="id_lokasi" class="form-control" required="required" autofocus="autofocus">
                         <option value="">--Pilih lokasi--</option>
                         <?php foreach ($lokasi->result() as $key => $data) { ?>
-                            <option value="<?= $data->lokasi ?>" <?= $data->lokasi == $row->id_lokasi ? "selected" : null ?>><?= $data->lokasi ?></option>
+                            <option value="<?= $data->id ?>" <?= $data->id == $row->id_lokasi ? "selected" : null ?>><?= $data->lokasi ?></option>
                         <?php } ?>
                     </select>
                 </div>

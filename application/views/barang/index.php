@@ -58,11 +58,11 @@
                                             <?= $data->barcode ?><br>
                                             <a class="btn btn-small btn-default" data-target="<?= $data->id ?>" href="<?= base_url('Barang/barcode_qrcode/' . $data->id) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a>
                                         </td>
-                                        <td><?= $data->nama_barang ?></td>
+                                        <td><?= $data->nk ?></td>
                                         <td><?= $data->merk ?></td>
                                         <td><?= $data->model ?></td>
-                                        <td><?= $data->id_kondisi ?></td>
-                                        <td><?= $data->id_lokasi ?></td>
+                                        <td><?= $data->k ?></td>
+                                        <td><?= $data->l ?></td>
                                         <td>
                                             <?php if ($data->gambar != null) { ?>
                                                 <img src="<?= base_url('assets/img/barang/' . $data->gambar) ?>" alt="" style="width:100px">
