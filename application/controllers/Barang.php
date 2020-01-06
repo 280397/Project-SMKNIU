@@ -8,7 +8,8 @@ class Barang extends CI_Controller
     {
         parent::__construct();
         $this->load->model(['Barang_m', 'Lokasi_m', 'Kondisi_m', 'Kategori_m']);
-        $this->load->library('excel');
+        // $this->load->library('excel');
+        $this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
         $this->load->helper(array('url', 'html', 'form'));
     }
 
@@ -268,54 +269,120 @@ class Barang extends CI_Controller
         $this->fungsi->PdfGenerator($html, 'Print All', 'A4', 'potrait');
     }
 
-
-    public function saveimport()
+    public function upload()
     {
-        if (!isset($_FILES["file"]["name"])) {
+        // Load plugin PHPExcel nya
+        include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
+
+        $config['upload_path'] = realpath('excel');
+        $config['allowed_types'] = 'xlsx|xls|csv';
+        $config['max_size'] = '10000';
+        $config['encrypt_name'] = true;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload()) {
 
             //upload gagal
             $this->session->set_flashdata('notif', '<div class="alert alert-danger"><b>PROSES IMPORT GAGAL!</b> ' . $this->upload->display_errors() . '</div>');
             //redirect halaman
+            redirect('import/');
+        } else {
+
+            $data_upload = $this->upload->data();
+
+            $excelreader     = new PHPExcel_Reader_Excel2007();
+            $loadexcel         = $excelreader->load('excel/' . $data_upload['file_name']); // Load file yang telah diupload ke folder excel
+            $sheet             = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
+
+            $data = array();
+
+            $numrow = 1;
+            foreach ($sheet as $row) {
+                if ($numrow > 1) {
+                    array_push($data, array(
+
+                        "barcode" => $row['Barcode'],
+                        "nama_barang" => $row['Nama'],
+                        "merk" => $row['Merek'],
+                        "model" => $row['Model'],
+                        "lokasi" => $row['Lokasi'],
+                        "detail" => $row['Detail'],
+                        "tgl_masuk" =>  $row['Tgl'],
+                        "sumber" => $row['Sumber'],
+                        'status'        => 'ready',
+                        'created'       => date('Y-m-d')
+                    ));
+                }
+                $numrow++;
+            }
+            $this->db->insert_batch('tbl_dosen', $data);
+            //delete file from server
+            unlink(realpath('excel/' . $data_upload['file_name']));
+
+            //upload success
+            $this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
+            //redirect halaman
+            redirect('import/');
+        }
+    }
+
+    public function uploaddd()
+    {
+        $fileName = $this->input->post('file', TRUE);
+
+        $config['upload_path'] = './upload/';
+        $config['file_name'] = $fileName;
+        $config['allowed_types'] = 'xls|xlsx|csv|ods|ots';
+        $config['max_size'] = 10000;
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+
+        if (!$this->upload->do_upload('file')) {
+            $error = array('error' => $this->upload->display_errors());
+            $this->session->set_flashdata('msg', 'Ada kesalah dalam upload');
             redirect('Barang');
         } else {
-            $path = $_FILES["file"]["tmp_name"];
-            $object = PHPExcel_IOFactory::load($path);
-            // $fileName = 'data-' . time() . '.xlsx';
-            // var_dump($object);
-            // die;
-            foreach ($object->getWorksheetIterator() as $worksheet) {
+            $media = $this->upload->data();
+            // $inputFileName = 'upload/' . $media['file_name'];
+            $inputFileName = base_url() . 'datafile/' . $media['file_name'];
 
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
-                // $cellIterator = $worksheet->getActiveCell();
-                // $cellIterator->setIterateOnlyExistingCells(FALSE);
-                for ($row = 2; $row <= $highestRow; $row++) {
-                    $barcode = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                    $name = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                    $merk = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $model = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $kondisi = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                    $lokasi = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-                    $detail = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-                    $tgl = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                    $sumber = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                    $status = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-                    $data[] = array(
-                        'barcode'       => $barcode,
-                        'nama_barang'   => $name,
-                        'merk'          => $merk,
-                        'model'         => $model,
-                        'kondisi'       => $kondisi,
-                        'lokasi'        => $lokasi,
-                        'detail'        => $detail,
-                        'tgl_masuk'     => PHPExcel_Style_NumberFormat::toFormattedString($tgl, 'YYYY-MM-DD'),
-                        'sumber'        => $sumber,
-                        'status'        => $status
-                    );
-                }
+            try {
+                $inputFileType = IOFactory::identify($inputFileName);
+                $objReader = IOFactory::createReader($inputFileType);
+                $objPHPExcel = $objReader->load($inputFileName);
+            } catch (Exception $e) {
+                die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
             }
-            $this->Barang_m->insertimport($data);
-            $this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
+
+            $sheet = $objPHPExcel->getSheet(0);
+            $highestRow = $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+
+            for ($row = 2; $row <= $highestRow; $row++) {
+                $rowData = $sheet->rangeToArray(
+                    'A' . $row . ':' . $highestColumn . $row,
+                    NULL,
+                    TRUE,
+                    FALSE
+                );
+                $data = array(
+                    "barcode" => $rowData[0][0],
+                    "nama_barang" => $rowData[0][1],
+                    "merk" => $rowData[0][2],
+                    "model" => $rowData[0][3],
+                    "lokasi" => $rowData[0][4],
+                    "detail" => $rowData[0][5],
+                    "tgl_masuk" =>  $rowData[0][6],
+                    "sumber" => $rowData[0][7],
+                    'status'        => 'ready',
+                    'created'       => date('Y-m-d')
+                );
+                $this->db->insert("barang", $data);
+            }
+            $this->session->set_flashdata('msg', 'Berhasil upload ...!!');
             redirect('Barang');
         }
     }

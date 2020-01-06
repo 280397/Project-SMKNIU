@@ -268,159 +268,6 @@ class Barang extends CI_Controller
         $this->fungsi->PdfGenerator($html, 'Print All', 'A4', 'potrait');
     }
 
-    // file upload functionality
-    public function upload()
-    {
-        $data = array();
-        $data['title'] = 'Import Excel Sheet | TechArise';
-        $data['breadcrumbs'] = array('Home' => '#');
-        // Load form validation library
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('fileURL', 'Upload File', 'callback_checkFileValidation');
-        if ($this->form_validation->run() == false) {
-
-            redirect('Barang');
-        } else {
-            // If file uploaded
-            if (!empty($_FILES['fileURL']['name'])) {
-                // get file extension
-                $extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
-
-                if ($extension == 'csv') {
-                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-                } elseif ($extension == 'xlsx') {
-                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                } else {
-                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-                }
-                // file path
-                $spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
-                $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-
-                // array Count
-                $arrayCount = count($allDataInSheet);
-                $flag = 0;
-                $createArray = array(
-                    'Barcode',
-                    'Nama',
-                    'Merek',
-                    'Model',
-                    'Kondisi',
-                    'Lokasi',
-                    'Detail',
-                    'Tgl',
-                    'Sumber',
-                    'Status'
-                );
-                $makeArray = array(
-                    'Barcode' => 'Barcode',
-                    'Nama' => 'Nama',
-                    'Merek' => 'Merek',
-                    'model' => 'model',
-                    'Kondisi' => 'Kondisi',
-                    'Lokasi' => 'Lokasi',
-                    'Detail' => 'Detail',
-                    'Tgl' => 'Tgl',
-                    'Sumber' => 'Sumber',
-                    'Status' => 'Status'
-                );
-                $SheetDataKey = array();
-                foreach ($allDataInSheet as $dataInSheet) {
-                    foreach ($dataInSheet as $key => $value) {
-                        if (in_array(trim($value), $createArray)) {
-                            $value = preg_replace('/\s+/', '', $value);
-                            $SheetDataKey[trim($value)] = $key;
-                        }
-                    }
-                }
-                $dataDiff = array_diff_key($makeArray, $SheetDataKey);
-                if (empty($dataDiff)) {
-                    $flag = 1;
-                }
-                // match excel sheet column
-                if ($flag == 1) {
-                    for ($i = 2; $i <= $arrayCount; $i++) {
-                        $addresses = array();
-                        $barcode = $SheetDataKey['Barcode'];
-                        $nama = $SheetDataKey['Nama'];
-                        $merek = $SheetDataKey['Merek'];
-                        $model = $SheetDataKey['Model'];
-                        $kondisi = $SheetDataKey['Kondisi'];
-                        $lokasi = $SheetDataKey['Lokasi'];
-                        $detail = $SheetDataKey['Detail'];
-                        $tgl = $SheetDataKey['Tgl'];
-                        $sumber = $SheetDataKey['Sumber'];
-                        $status = $SheetDataKey['Status'];
-
-                        $barcode = filter_var(trim($allDataInSheet[$i][$barcode]), FILTER_SANITIZE_STRING);
-                        $nama = filter_var(trim($allDataInSheet[$i][$nama]), FILTER_SANITIZE_STRING);
-                        $merek = filter_var(trim($allDataInSheet[$i][$merek]), FILTER_SANITIZE_EMAIL);
-                        $model = filter_var(trim($allDataInSheet[$i][$model]), FILTER_SANITIZE_STRING);
-                        $kondisi = filter_var(trim($allDataInSheet[$i][$kondisi]), FILTER_SANITIZE_STRING);
-                        $lokasi = filter_var(trim($allDataInSheet[$i][$lokasi]), FILTER_SANITIZE_STRING);
-                        $detail = filter_var(trim($allDataInSheet[$i][$detail]), FILTER_SANITIZE_STRING);
-                        $tgl = filter_var(trim($allDataInSheet[$i][$tgl]), FILTER_SANITIZE_STRING);
-                        $sumber = filter_var(trim($allDataInSheet[$i][$sumber]), FILTER_SANITIZE_STRING);
-                        $status = filter_var(trim($allDataInSheet[$i][$status]), FILTER_SANITIZE_STRING);
-                        $fetchData[] = array(
-                            'barcode'       => $barcode,
-                            'nama_barang'   => $nama,
-                            'merk'          => $merek,
-                            'model'         => $model,
-                            'kondisi'       => $kondisi,
-                            'lokasi'        => $lokasi,
-                            'detail'        => $detail,
-                            'tgl_masuk'     => PHPExcel_Style_NumberFormat::toFormattedString($tgl, 'YYYY-MM-DD'),
-                            'sumber'        => $sumber,
-                            'status'        => $status,
-                            'created' => date('Y-m-d H:i:s')
-                        );
-                    }
-                    $data['dataInfo'] = $fetchData;
-                    $this->site->setBatchImport($fetchData);
-                    $this->site->importData();
-                } else {
-                    echo "Please import correct file, did not match excel sheet column";
-                }
-                // $this->load->view('Barang', $data);
-                redirect('Barang');
-            }
-        }
-    }
-
-    // checkFileValidation
-    public function checkFileValidation($string)
-    {
-        $file_mimes = array(
-            'text/x-comma-separated-values',
-            'text/comma-separated-values',
-            'application/octet-stream',
-            'application/vnd.ms-excel',
-            'application/x-csv',
-            'text/x-csv',
-            'text/csv',
-            'application/csv',
-            'application/excel',
-            'application/vnd.msexcel',
-            'text/plain',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        );
-        if (isset($_FILES['fileURL']['name'])) {
-            $arr_file = explode('.', $_FILES['fileURL']['name']);
-            $extension = end($arr_file);
-            if (($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileURL']['type'], $file_mimes)) {
-                return true;
-            } else {
-                $this->form_validation->set_message('checkFileValidation', 'Please choose correct file.');
-                return false;
-            }
-        } else {
-            $this->form_validation->set_message('checkFileValidation', 'Please choose a file.');
-            return false;
-        }
-    }
-
-
 
     public function saveimport()
     {
@@ -429,7 +276,7 @@ class Barang extends CI_Controller
             //upload gagal
             $this->session->set_flashdata('notif', '<div class="alert alert-danger"><b>PROSES IMPORT GAGAL!</b> ' . $this->upload->display_errors() . '</div>');
             //redirect halaman
-            redirect('Barang');
+            redirect('Segel');
         } else {
             $path = $_FILES["file"]["tmp_name"];
             $object = PHPExcel_IOFactory::load($path);
@@ -450,7 +297,7 @@ class Barang extends CI_Controller
                     $detail = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
                     $tgl = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                     $sumber = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                    $status = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                    // $status = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
                     $data[] = array(
                         'barcode'       => $barcode,
                         'nama_barang'   => $name,
@@ -461,10 +308,13 @@ class Barang extends CI_Controller
                         'detail'        => $detail,
                         'tgl_masuk'     => PHPExcel_Style_NumberFormat::toFormattedString($tgl, 'YYYY-MM-DD'),
                         'sumber'        => $sumber,
-                        'status'        => $status
+                        'status'        => 'ready',
+                        'created'       => date('Y-m-d')
                     );
                 }
             }
+            // var_dump($highestRow);
+            // die;
             $this->Barang_m->insertimport($data);
             $this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
             redirect('Barang');

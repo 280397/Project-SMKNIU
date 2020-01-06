@@ -97,7 +97,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url() ?>Barang/saveimport" method="post" enctype="multipart/form-data" id="import_form">
+                <form action="<?= base_url() ?>Barang/uploaddd" method="POST" enctype="multipart/form-data" id="import_form">
                     <div class="modal-body">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="file" required accept=".xls, .xlsx">
