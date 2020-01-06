@@ -3,21 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Lokasi_m extends CI_Model
 {
+
     public function getbarang($id)
     {
 
-        $q = $this->db->query("SELECT * FROM barang a join barang_lokasi b on a.id_lokasi = b.id join barang_kategori c on a.nama_barang = c.id join barang_kondisi d on a.id_kondisi = c.id where a.id_lokasi = '" . $id . "' group by a.id")->result_array();
+        $q = $this->db->query("SELECT * FROM barang a join barang_lokasi b on a.id_lokasi = b.id join barang_kategori c on a.nama_barang = c.id join barang_kondisi d on a.id_kondisi = d.id where a.id_lokasi = '" . $id . "' group by a.id")->result_array();
         return $q;
-    }
-
-    public function getId($id = null)
-    {
-        $this->db->from('barang');
-        if ($id != null) {
-            $this->db->where('barcode', $id);
-        }
-        $query = $this->db->get();
-        return $query;
     }
 
     public function get($id = null)
@@ -48,7 +39,7 @@ class Lokasi_m extends CI_Model
     }
 
     // hapus lokasi
-    public function hapusLokasi($id)
+    public function hapuslokasi($id)
     {
         $this->db->where('id', $id);
         $this->db->delete('barang_lokasi', ['id' => $id]);

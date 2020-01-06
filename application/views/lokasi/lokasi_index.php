@@ -33,31 +33,31 @@
                             <tbody>
                                 <?php $i = 1;
                                 foreach ($row as $data) { ?>
-                                <tr>
-                                    <th scope="row" style="width:5%;"><?= $i; ?></th>
-                                    <td>
-                                        <?= $data['barcode'] ?><br>
-                                        <!-- <i class="btn btn-small btn-default" data-target="<?= $data['id'] ?>" href="<?= base_url('lokasi/barcode_qrcode/' . $data['id']) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a> -->
-                                    </td>
+                                    <tr>
+                                        <th scope="row" style="width:5%;"><?= $i; ?></th>
+                                        <td>
+                                            <?= $data['barcode'] ?><br>
+                                            <!-- <i class="btn btn-small btn-default" data-target="<?= $data['id'] ?>" href="<?= base_url('lokasi/barcode_qrcode/' . $data['id']) ?>">Generate <i class="fas fa-barcode"></i> <i class="fas fa-qrcode"></i></a> -->
+                                        </td>
 
-                                    <td><?= $data['kategori'] ?></td>
-                                    <td><?= $data['merk'] ?></td>
-                                    <td><?= $data['model'] ?></td>
-                                    <td><?= $data['kondisi'] ?></td>
-                                    <td><?= $data['lokasi'] ?></td>
-                                    <!-- <td><?= $data['sumber'] ?></td> -->
+                                        <td><?= $data['kategori'] ?></td>
+                                        <td><?= $data['merk'] ?></td>
+                                        <td><?= $data['model'] ?></td>
+                                        <td><?= $data['kondisi'] ?></td>
+                                        <td><?= $data['lokasi'] ?></td>
+                                        <!-- <td><?= $data['sumber'] ?></td> -->
 
-                                    <td>
-                                        <?php if ($data['gambar'] != null) { ?>
-                                        <img src="<?= base_url('assets/img/barang/' . $data['gambar']) ?>" alt="" style="width:100px">
-                                        <?php } ?>
-                                    </td>
-                                    <!-- <td>
+                                        <td>
+                                            <?php if ($data['gambar'] != null) { ?>
+                                                <img src="<?= base_url('assets/img/barang/' . $data['gambar']) ?>" alt="" style="width:100px">
+                                            <?php } ?>
+                                        </td>
+                                        <!-- <td>
                                         <a class="btn btn-small btn-primary" data-target="<?= $data['barcode'] ?>" href="<?= base_url('barang/editbarang/' . $data['id']) ?>"><i class="fas fa-edit"></i></a>
                                         <a class="btn btn-small btn-danger" href="<?= base_url('lokasi/hapusbarang/' . $data['barcode']) ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
                                     </td> -->
-                                </tr>
-                                <?php $i++; ?>
+                                    </tr>
+                                    <?php $i++; ?>
                                 <?php } ?>
                             </tbody>
                         </table>

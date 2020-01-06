@@ -91,17 +91,17 @@ class Lokasi extends CI_Controller
         redirect('Lokasi');
     }
 
-    // hapus lokasi
+    // hapus Lokasi
     public function hapuslokasi($id = null)
     {
-        // $this->load->model('lokasi_m');
-        $this->Lokasi_m->hapuslokasi($id);
+        // $this->load->model('Kategori_m');
+        $this->lokasi_m->hapuslokasi($id);
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data dihapus!</div>');
         redirect('Lokasi');
     }
 
 
-    // edit lokasi
+    // edit kategori
     public function editlokasi($id)
     {
         $dataa['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
