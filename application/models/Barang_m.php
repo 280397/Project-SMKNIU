@@ -5,19 +5,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class Barang_m extends CI_Model
 {
-    private $_batchImport;
 
-    public function setBatchImport($batchImport)
-    {
-        $this->_batchImport = $batchImport;
-    }
-
-    // save data
-    public function importData()
-    {
-        $data = $this->_batchImport;
-        $this->db->insert_batch('barang', $data);
-    }
     function insertimport($data)
     {
         $this->db->insert_batch('barang', $data);
