@@ -4,6 +4,7 @@ Sistem ini merupakan Aplikasi inventory integrasi dengan platform android
 Peringatan!!!
 - pastikan nama domain sama dengan folder aplikasi (root)
 - awal konfigurasi menggunakan php-7 (belum diuji pada versi php dibawahnya)
+- menggunakan mysql database
 - menggunakan framework codeigniter 3
 - Sistem ini dilengkapi dengan REST API Android
 - jangan mengaktifkan fitur "menu" di menu admin
