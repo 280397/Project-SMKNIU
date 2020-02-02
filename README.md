@@ -16,7 +16,8 @@ Peringatan!!!
 
 Cara konfigurasi;
 1. masuk ke folder applicaton->config->buka file database.php
-    a. pada baris 76-96 merupakan konfigurasi database. isikan sesuai konfigurasi pada phpmyadmin server.
+    a. Export database (file dengan nama inventory.sql, bisa di cek pada folder ini)
+    b. pada baris 76-96 merupakan konfigurasi database. isikan sesuai konfigurasi pada phpmyadmin server.
 2. login website dengan user default "admin", password "admin"
 
 =============================================================================
