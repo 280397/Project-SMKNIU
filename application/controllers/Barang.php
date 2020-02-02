@@ -286,7 +286,7 @@ class Barang extends CI_Controller
             //upload gagal
             $this->session->set_flashdata('notif', '<div class="alert alert-danger"><b>PROSES IMPORT GAGAL!</b> ' . $this->upload->display_errors() . '</div>');
             //redirect halaman
-            redirect('import/');
+            redirect('Barang');
         } else {
 
             $data_upload = $this->upload->data();
@@ -316,14 +316,14 @@ class Barang extends CI_Controller
                 }
                 $numrow++;
             }
-            $this->db->insert_batch('tbl_dosen', $data);
+            $this->db->insert_batch('barang', $data);
             //delete file from server
             unlink(realpath('excel/' . $data_upload['file_name']));
 
             //upload success
             $this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
             //redirect halaman
-            redirect('import/');
+            redirect('Barang');
         }
     }
 

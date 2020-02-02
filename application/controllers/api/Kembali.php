@@ -56,31 +56,53 @@ class Kembali extends REST_Controller
         $barcode = $this->post('barcode');
         $kode = $this->post('kode');
         $id_user_pjm = $this->post('id_user_pjm');
+        $denda = $this->post('denda');
 
         #Set response API if Success
         $response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success post data', 'data_post_pinjam' => null);
 
         #Set response API if Not Found
         $response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data_post_pinjam' => null);
-        $get_temp = $this->M_kembali->post_data($barcode, $kode, $id_user_pjm);
+        $get_temp = $this->M_kembali->post_data($barcode, $kode, $id_user_pjm, $denda);
         $cek_antian = $this->db->query("SELECT * FROM pengembalian_temp WHERE barcode = '$barcode' AND kode ='$kode'")->row_array();
+        $cek_denda = $this->db->query("SELECT * FROM peminjaman WHERE barcode = '$barcode'")->row_array();
 
-        // foreach ($get_temp as $temp) {
-        $data = [
-            'kode'              => $get_temp['kode'],
-            'barcode'           => $get_temp['barcode'],
-            'id_user_pjm'       => $get_temp['id_user_pjm']
-        ];
-        // $query = $this->db->insert('pengembalian_temp', $data);
-        // }
+        $sekarang   = date('Y-m-d');
+        $tanggal    = $cek_denda['tgl_aju_kembali'];
+        $date1      = new DateTime($sekarang);
+        $date2      = new DateTime($tanggal);
+        $interval   = $date2->diff($date1);
+        // $interval   = $date2 - $date1;
 
-        if (!$cek_antian) {
-            $query = $this->db->insert('pengembalian_temp', $data);
+        $hari      = $interval->d;
+        // var_dump($hari);
+        // die;
+        if ($hari > 0) {
+            foreach ($get_temp as $temp) {
+                $data = [
+                    'kode'              => $get_temp['kode'],
+                    'barcode'           => $get_temp['barcode'],
+                    'id_user_pjm'       => $get_temp['id_user_pjm'],
+                    'denda'             => '2000' * $hari
+                ];
+            }
+           
         } else {
-            echo "heng keneng";
+            foreach ($get_temp as $temp) {
+                $data = [
+                    'kode'              => $get_temp['kode'],
+                    'barcode'           => $get_temp['barcode'],
+                    'id_user_pjm'       => $get_temp['id_user_pjm'],
+                    'denda'             => '0'
+                ];
+            }
+            
         }
-
-        // $this->session->unset_userdata('kode');
+        if (!$cek_antian) {
+                $query = $this->db->insert('pengembalian_temp', $data);
+            } else {
+                echo "Gagal";
+            }
         if ($query) {
             $this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
         } else {
@@ -101,6 +123,26 @@ class Kembali extends REST_Controller
 
         if ($query) {
             $response['SUCCESS']['data_aju_kembali'] = $query;
+
+            $this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
+        } else {
+            $this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
+        }
+    }
+    public function ambild_get()
+    {
+        $id = $this->get('id_user_pjm');
+        #Set response API if Success
+        $response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success get data', 'data_denda' => null);
+
+        #Set response API if Not Found
+        $response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'fail get data', 'data_denda' => null);
+
+        $query = $this->M_kembali->ambil_denda($id);
+
+        if ($query) {
+            $response['SUCCESS']['data_denda'] = $query;
+
             $this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
         } else {
             $this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);

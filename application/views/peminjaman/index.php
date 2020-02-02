@@ -22,6 +22,7 @@
                                     <th scope="col">Peminjam</th>
                                     <th scope="col">Kelas</th>
                                     <th scope="col">Kode</th>
+                                    <th scope="col">Barcode</th>
                                     <th scope="col">Item</th>
                                     <th scope="col">Tgl Pinjam</th>
                                     <th scope="col">Pengajuan</th>
@@ -39,6 +40,7 @@
                                         <td><?= $data->kelas ?></td>
                                         <td><?= $data->kode ?></td>
                                         <td><?= $data->barcode ?></td>
+                                        <td><?= $data->bar ?></td>
                                         <td><?= $data->tgl_pinjam ?></td>
                                         <td><?= $data->tgl_aju_kembali ?></td>
                                         <td><?= $data->id_admin ?></td>

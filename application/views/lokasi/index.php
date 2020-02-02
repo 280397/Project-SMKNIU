@@ -37,15 +37,15 @@
                                         <td><?= $l['lokasi']; ?></td>
                                         <?php $idlokasi = $l['id'] ?>
                                         <td><?php
-                                            $sql = "SELECT barang.merk FROM barang WHERE barang.id_lokasi= $idlokasi";
+                                            $sql = "SELECT barang.merk FROM barang WHERE barang.id_lokasi = $idlokasi";
                                             $query = $this->db->query($sql);
                                             echo $query->num_rows();
                                             ?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-small btn-primary" data-target="<?= $l['lokasi'] ?>" href="<?= base_url('lokasi/indexlokasi/' . $l['id']); ?>"><i class="fas fa-info-circle"></i></a>
-                                            <a class="btn btn-small btn-warning" data-target="<?= $l['id'] ?>" href="<?= base_url('lokasi/editlokasi/' . $l['id']); ?>"><i class="fas fa-edit"></i></a>
-                                            <a class="btn btn-small btn-danger" href="<?= base_url('lokasi/hapuslokasi/' . $l['id']); ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
+                                            <a class="btn btn-small btn-primary" data-target="<?= $l['id'] ?>" href="<?= base_url('Lokasi/indexlokasi/' . $l['id']); ?>"><i class="fas fa-info-circle"></i></a>
+                                            <a class="btn btn-small btn-warning" data-target="<?= $l['id'] ?>" href="<?= base_url('Lokasi/editlokasi/' . $l['id']); ?>"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-small btn-danger" href="<?= base_url('Lokasi/hapuslokasi/' . $l['id']); ?>" onclick="return confirm ('Yakin hapus?')"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

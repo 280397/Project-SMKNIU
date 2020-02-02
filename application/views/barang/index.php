@@ -28,8 +28,8 @@
                 <div class="table-responsive">
                     <a class="btn btn-primary mb-3 col-sm-2" href="<?= base_url('Barang/add'); ?>"><i class="fas fa-plus"></i> Tambah barang
                     </a>
-                    <a class="btn btn-success mb-3 col-sm-2" href="" data-toggle="modal" data-target="#Import"><i class="fas fa-plus"></i> Import Excel
-                    </a>
+                    <!--<a class="btn btn-success mb-3 col-sm-2" href="" data-toggle="modal" data-target="#Import"><i class="fas fa-plus"></i> Import Excel-->
+                    <!--</a>-->
                     <a class="btn btn-warning mb-3" target="_blank" href="<?= base_url('Barang/printAll'); ?>"><i class="fas fa-print"></i> Print
                     </a>
 
@@ -97,7 +97,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url() ?>Barang/uploaddd" method="POST" enctype="multipart/form-data" id="import_form">
+                <?php echo form_open('Barang/uploaddd');?>
+                <form  method="POST" enctype="multipart/form-data" id="import_form">
                     <div class="modal-body">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="file" required accept=".xls, .xlsx">
@@ -111,6 +112,9 @@
                         <button type="submit" name="import" value="Import" class="btn btn-primary">Upload</button>
                     </div>
                 </form>
+                 <?php
+    echo form_close();
+    ?> 
             </div>
         </div>
     </div>

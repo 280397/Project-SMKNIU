@@ -14,7 +14,7 @@
 
                 <?= $this->session->flashdata('message'); ?>
                 <div class="table-responsive">
-                    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newKondisiModal"><i class="fas fa-plus"></i> Tambah Kondisi</a>
+                    <!--<a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newKondisiModal"><i class="fas fa-plus"></i> Tambah Kondisi</a>-->
                     <div id="example1_wrapper" class="dataTables_wrapper ">
                         <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                             <thead>

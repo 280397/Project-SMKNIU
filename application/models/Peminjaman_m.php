@@ -5,7 +5,7 @@ class Peminjaman_m extends CI_Model
 {
     public function get()
     {
-        $this->db->select('peminjaman.*,user_pjm.name as id_user_pjm, user_pjm.kelas as kelas,barang_kategori.kategori as barcode, user.name as id_admin');
+        $this->db->select('peminjaman.*,user_pjm.name as id_user_pjm, user_pjm.kelas as kelas,barang_kategori.kategori as bar, user.name as id_admin');
         $this->db->from('peminjaman');
         $this->db->join('user_pjm', 'user_pjm.id=peminjaman.id_user_pjm');
         $this->db->join('barang', 'barang.barcode=peminjaman.barcode');
