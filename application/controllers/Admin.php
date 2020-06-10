@@ -10,6 +10,7 @@ class Admin extends CI_Controller
 		$this->load->model('Admin_model');
 		$this->load->library('form_validation');
 		$this->load->helper('form');
+		// 
 
 		// blok akses url
 		if (!$this->session->userdata('username')) {
@@ -156,35 +157,31 @@ class Admin extends CI_Controller
 	{
 		$post = $this->input->post(null, true);
 		if (isset($_POST['add'])) {
-            if ($this->Admin_model->check_id($post['id_admin'])->num_rows() > 0) {
-                $this->session->set_flashdata('error', "ID $post[id_admin] sudah dipakai admin lain");
-                redirect('Admin/adduser');
-            } else {               
-                    // $this->Admin_model->add($post);
-                    if ($this->db->affected_rows() > 0) {
-                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
-                    }
-                    redirect('Admin/KelolaUser');
-                
-            }
- 
-            // edit proses
-        } else if (isset($_POST['edit'])) {
 			if ($this->Admin_model->check_id($post['id_admin'])->num_rows() > 0) {
-                $this->session->set_flashdata('error', "ID $post[id_admin] sudah dipakai admin lain");
-                redirect('Admin/edit/' . $post['id']);
-            } else {
-                
-                    $this->Admin_model->edit($post);
-                    if ($this->db->affected_rows() > 0) {
-                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
-                    }
-                    redirect('Admin/KelolaUser');
-               
-            }
-        }
+				$this->session->set_flashdata('error', "ID $post[id_admin] sudah dipakai admin lain");
+				redirect('Admin/adduser');
+			} else {
+				// $this->Admin_model->add($post);
+				if ($this->db->affected_rows() > 0) {
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
+				}
+				redirect('Admin/KelolaUser');
+			}
 
-		
+			// edit proses
+		} else if (isset($_POST['edit'])) {
+			if ($this->Admin_model->check_id($post['id_admin'])->num_rows() > 0) {
+				$this->session->set_flashdata('error', "ID $post[id_admin] sudah dipakai admin lain");
+				redirect('Admin/edit/' . $post['id']);
+			} else {
+
+				$this->Admin_model->edit($post);
+				if ($this->db->affected_rows() > 0) {
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
+				}
+				redirect('Admin/KelolaUser');
+			}
+		}
 	}
 
 
@@ -260,34 +257,34 @@ class Admin extends CI_Controller
 
 
 	function barcode_qrcode($id)
-    {
-        $data['titl'] = 'Generator';
-        $data['title'] = 'Barcode Generator';
-        $data['title1'] = 'QR-Code Generator';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+	{
+		$data['titl'] = 'Generator';
+		$data['title'] = 'Barcode Generator';
+		$data['title1'] = 'QR-Code Generator';
+		$data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
-        // query data menu
-        $dataa['row'] = $this->Admin_model->getId($id)->row();
+		// query data menu
+		$dataa['row'] = $this->Admin_model->getId($id)->row();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/breadcumb', $data);
-        $this->load->view('admin/barcode_qrcode', $dataa);
-        $this->load->view('templates/footer');
-    }
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/breadcumb', $data);
+		$this->load->view('admin/barcode_qrcode', $dataa);
+		$this->load->view('templates/footer');
+	}
 
-    function barcode_print($id)
-    {
-        $data['row'] = $this->Admin_model->getId($id)->row();
-        $html  = $this->load->view('admin/barcode_print', $data, true);
-        $this->fungsi->PdfGenerator($html, 'ID-' . $data['row']->id_admin, 'A4', 'landscape');
-    }
-    // function qrcode_print($id)
-    // {
-    //     $data['row'] = $this->Admin_model->getId($id)->row();
-    //     $html  = $this->load->view('admin/qrcode_print', $data, true);
-    //     $this->fungsi->PdfGenerator($html, 'ID-' . $data['row']->barcode, 'A4', 'potrait');
-    // }
-   
+	function barcode_print($id)
+	{
+		$data['row'] = $this->Admin_model->getId($id)->row();
+		$html  = $this->load->view('admin/barcode_print', $data, true);
+		$this->fungsi->PdfGenerator($html, 'ID-' . $data['row']->id_admin, 'A4', 'landscape');
+	}
+	// function qrcode_print($id)
+	// {
+	//     $data['row'] = $this->Admin_model->getId($id)->row();
+	//     $html  = $this->load->view('admin/qrcode_print', $data, true);
+	//     $this->fungsi->PdfGenerator($html, 'ID-' . $data['row']->barcode, 'A4', 'potrait');
+	// }
+
 }
