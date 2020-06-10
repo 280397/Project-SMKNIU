@@ -27,10 +27,31 @@ class Auth extends REST_Controller
 
 		$user = $this->post('username');
 		$pass = $this->input->post('password');
-
-
+		
 		$query = $this->M_auth->check_login('user_pjm', $user, $pass);
 		//$query =  $this->M_auth->insert_token($user,$token);
+
+		if ($query) {
+			$response['SUCCESS']['data'] = $query;
+			$this->response($response['SUCCESS'], REST_Controller::HTTP_OK);
+		} else {
+			$this->response($response['NOT_FOUND'], REST_Controller::HTTP_OK);
+		}
+	}
+	 
+	public function index_get()
+	{
+	    $id = $this->get('id');
+		#Set response API if Success
+		$response['SUCCESS'] = array('status' => TRUE, 'message' => 'Success loggin', 'data' => null);
+
+		#Set response API if Not Found
+		$response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'No user were found', 'data' => null);
+
+
+		
+        $query = $this->M_auth->get_data($id);
+        
 
 		if ($query) {
 			$response['SUCCESS']['data'] = $query;

@@ -90,3 +90,9 @@ class M_pinjam extends CI_Model
         return $this->db->get()->row();
     }
 }
+
+
+
+/* End of file M_auth.php */
+
+/* Location: ./application/models/m_api/M_auth.php */

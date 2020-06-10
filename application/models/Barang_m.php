@@ -30,6 +30,18 @@ class Barang_m extends CI_Model
         $result = $this->db->query($count);
         return $result->row()->stok;
     }
+    public function get_pinjam()
+    {
+        $count = "SELECT count(barcode) as stok from barang WHERE status = 'pinjam'";
+        $result = $this->db->query($count);
+        return $result->row()->stok;
+    }
+    public function get_ready()
+    {
+        $count = "SELECT count(barcode) as stok from barang WHERE status = 'ready'";
+        $result = $this->db->query($count);
+        return $result->row()->stok;
+    }
 
     public function getId($id = null)
     {

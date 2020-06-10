@@ -42,7 +42,7 @@
                                     <td>
 
                                         <a class="btn btn-small btn-warning" data-target="<?= $p['id'] ?>" href="<?= base_url('user_pjm/edituser/' . $p['id']); ?>"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-small btn-danger" href="<?= base_url('user_pjm/hapususer' . $p['id']); ?>"><i class="fas fa-trash"></i></a>
+                                        <a class="btn btn-small btn-danger" href="<?= base_url('user_pjm/hapususer/' . $p['id']); ?>"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <?php $i++; ?>

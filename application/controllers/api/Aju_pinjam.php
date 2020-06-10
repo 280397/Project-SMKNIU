@@ -52,7 +52,7 @@ class Aju_pinjam extends REST_Controller
                 'tgl_aju_kembali'    => $this->input->post('tgl_aju_kembali'),
                 'id_admin'        => $this->input->post('id_admin'),
                 'keperluan'        =>    $this->input->post('keperluan'),
-                'denda'		=>	0,
+                // 'denda'		=>	0,
                 'status'        => 'pinjam'
             ];
             $this->db->update('barang', ['status' => 'pinjam'], ['barcode' => $temp['barcode']]);

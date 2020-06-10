@@ -36,6 +36,18 @@ class M_auth extends CI_Model
 
 		// return $this->db->get('barang')->result();
 	}
+	
+	public function get_data($id)
+	{
+		$this->db->select('user_pjm.*');
+		$this->db->from('user_pjm');
+		$this->db->where('id',$id);
+		
+		$query = $this->db->get();
+		return $query->result();
+
+		// return $this->db->get('barang')->result();
+	}
 }
 
 

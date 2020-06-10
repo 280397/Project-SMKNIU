@@ -60,7 +60,7 @@
                             echo $query->num_rows();
                             ?>
                         </h3>
-                        <div class="mr-5">Barang Baru!</div>
+                        <div class="mr-5">Kondisi Barang Baik!</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="<?= base_url('kondisi/indexkondisi/1') ?>">
                         <span class="float-left">Lihat Detail</span>
@@ -85,7 +85,7 @@
                             echo $query->num_rows();
                             ?>
                         </h3>
-                        <div class="mr-5">Barang Rusak!</div>
+                        <div class="mr-5">Kondisi Barang Rusak!</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="<?= base_url('kondisi/indexkondisi/2') ?>">
                         <span class="float-left">Lihat Detail</span>

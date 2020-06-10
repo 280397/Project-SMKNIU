@@ -22,6 +22,8 @@ class Barang extends CI_Controller
         // query data menu
         $data['row'] = $this->Barang_m->get();
         $data['count'] = $this->Barang_m->get_count();
+        $data['pinjam'] = $this->Barang_m->get_pinjam();
+        $data['ready'] = $this->Barang_m->get_ready();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);

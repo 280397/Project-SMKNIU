@@ -94,12 +94,12 @@ class User_pjm extends CI_Controller
     }
 
     // hapus kondisi
-    public function hapususer($id = null)
+    public function hapususer($id)
     {
         // $this->load->model('Kondisi_m');
         $this->User_pjm_m->hapususer($id);
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data dihapus!</div>');
-        redirect('user');
+        redirect('User_pjm');
     }
 
 

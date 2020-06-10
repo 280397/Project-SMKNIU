@@ -47,6 +47,7 @@ class Aju_kembali extends REST_Controller
                 // 'barcode'               => $this->input->post('barcode'),
                 'tgl_kembali'           => date('Y-m-d H:i:s'),
                 'id_admin_kembali'      => $this->input->post('id_admin'),
+                // 'denda'                 => $temp['denda'],
                 'status'                => 'kembali'
             ];
             $this->db->update('barang', ['status' => 'ready'], ['barcode' => $temp['barcode']]);

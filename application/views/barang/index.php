@@ -8,7 +8,9 @@
         <!-- DataTables Example -->
         <div class="card mb-3">
             <div class="card-header">
-                Stok barang : <?= $count ?>
+                Stok barang : <?= $count ?> <br>
+                Barang ready : <?= $ready ?><br>
+                Barang dipinjam : <?= $pinjam ?>
             </div>
             <div class="card-body">
                 <?php if (form_error('fileURL')) { ?>

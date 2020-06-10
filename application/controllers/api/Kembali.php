@@ -65,20 +65,27 @@ class Kembali extends REST_Controller
         $response['NOT_FOUND'] = array('status' => FALSE, 'message' => 'error', 'data_post_pinjam' => null);
         $get_temp = $this->M_kembali->post_data($barcode, $kode, $id_user_pjm, $denda);
         $cek_antian = $this->db->query("SELECT * FROM pengembalian_temp WHERE barcode = '$barcode' AND kode ='$kode'")->row_array();
-        $cek_denda = $this->db->query("SELECT * FROM peminjaman WHERE barcode = '$barcode'")->row_array();
+        $cek_denda = $this->db->query("SELECT * FROM peminjaman WHERE barcode = '$barcode' AND tgl_kembali = '0000-00-00 00:00:00'")->row_array();
 
         $sekarang   = date('Y-m-d');
         $tanggal    = $cek_denda['tgl_aju_kembali'];
-        $date1      = new DateTime($sekarang);
-        $date2      = new DateTime($tanggal);
-        $interval   = $date2->diff($date1);
-        // $interval   = $date2 - $date1;
+        // $date1      = new DateTime($sekarang);
+        // $date2      = new DateTime($tanggal);
+        // $interval   = $date1->diff($date2);
 
-        $hari      = $interval->d;
-        // var_dump($hari);
-        // die;
+        // $hari      = $interval->d;
+            
+        $tanggal_kembali = date("Y-m-d",strtotime($cek_denda['tgl_aju_kembali']));
+        $sekarang = date("Y-m-d",strtotime($sekarang));
+        $hasil = abs(strtotime($sekarang) - strtotime($tanggal_kembali));
+        $tahun = floor($hasil / (365*60*60*24));
+        $bulan = floor(($hasil - $tahun * 365*60*60*24) / (30*60*60*24));
+        $hari = floor(($hasil - $tahun * 365*60*60*24 - $bulan*30*60*60*24)/ (60*60*24));
+            
+        // var_dump($hari); die;
         if ($hari > 0) {
             foreach ($get_temp as $temp) {
+
                 $data = [
                     'kode'              => $get_temp['kode'],
                     'barcode'           => $get_temp['barcode'],
@@ -89,6 +96,7 @@ class Kembali extends REST_Controller
            
         } else {
             foreach ($get_temp as $temp) {
+
                 $data = [
                     'kode'              => $get_temp['kode'],
                     'barcode'           => $get_temp['barcode'],

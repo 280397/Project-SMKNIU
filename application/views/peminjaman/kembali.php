@@ -26,6 +26,7 @@
                                     <th scope="col">Pengajuan</th>
                                     <th scope="col">Tgl Kembali</th>
                                     <th scope="col">Admin</th>
+                                    <!--<th scope="col">Denda</th>-->
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -42,7 +43,7 @@
                                         <td><?= $data->tgl_aju_kembali ?></td>
                                         <td><?= $data->tgl_kembali ?></td>
                                         <td><?= $data->id_admin ?></td>
-
+                                        <!--<td><?= $data->denda ?></td>-->
                                         <td style="background-color: green; color:white;text-transform: capitalize;"><?= $data->status ?>
                                         </td>
                                     </tr>

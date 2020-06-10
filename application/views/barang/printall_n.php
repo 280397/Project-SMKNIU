@@ -51,19 +51,19 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
         <tbody>
             <?php $i = 1;
             foreach ($row->result() as $key => $data) { ?>
-            <tr>
-                <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
+                <tr>
+                    <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
-                <td><?= $data->barcode ?></td>
-                <td><?= $data->nk ?></td>
-                <td><?= $data->merk ?></td>
-                <td><?= $data->model ?></td>
-                <td><?= $data->k ?></td>
-                <td><?= $data->l ?></td>
+                    <td><?= $data->barcode ?></td>
+                    <td><?= $data->nk ?></td>
+                    <td><?= $data->merk ?></td>
+                    <td><?= $data->model ?></td>
+                    <td><?= $data->k ?></td>
+                    <td><?= $data->l ?></td>
 
 
-            </tr>
-            <?php $i++; ?>
+                </tr>
+                <?php $i++; ?>
             <?php } ?>
         </tbody>
     </table>
@@ -84,25 +84,29 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                 <tbody>
                     <?php $i = 1;
                     foreach ($kategori as $l) : ?>
-                    <tr>
-                        <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
+                        <tr>
+                            <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
-                        <td><?= $l['kategori'] ?></td>
-                        <td>
-                            <?php
+                            <td><?= $l['kategori'] ?></td>
+                            <td>
+                                <?php
                                 $idkategori = $l['id'];
                                 $sql = "SELECT barang.merk FROM barang WHERE barang.nama_barang = $idkategori";
                                 $query = $this->db->query($sql);
                                 echo $query->num_rows();
                                 ?>
-                        </td>
-                    </tr>
-                    <?php $i++; ?>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
                     <?php endforeach ?>
                 </tbody>
             </table>
 
         </div>
+
+
+    </div>
+    <div class="row">
         <div class="col-md-3" style="display:inline">
             <p>Rekapitulasi Per Kondisi</p>
             <table style="width:50%">
@@ -117,52 +121,54 @@ font-family:"Times New Roman","serif"'><img width=356 height=66 id="Picture 1" s
                 <tbody>
                     <?php $i = 1;
                     foreach ($kondisi as $l) : ?>
-                    <tr>
-                        <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
+                        <tr>
+                            <!-- <th scope="row" style="width:5%;"><?= $i; ?></th> -->
 
-                        <td><?= $l['kondisi'] ?></td>
-                        <td>
-                            <?php
+                            <td><?= $l['kondisi'] ?></td>
+                            <td>
+                                <?php
                                 $idkondisi = $l['id'];
                                 $sql = "SELECT barang.merk FROM barang WHERE barang.id_kondisi = $idkondisi";
                                 $query = $this->db->query($sql);
                                 echo $query->num_rows();
                                 ?>
-                        </td>
-                    </tr>
-                    <?php $i++; ?>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
                     <?php endforeach ?>
                 </tbody>
             </table>
 
         </div>
-        <div class="row">
-            <table style="width:100%;">
 
-                <thead>
-                    <tr>
+    </div>
+    <div class="row">
+        <table style="width:100%;">
 
-                        <td scope="col" style="border:1px solid #ffffff;">
-                            <p style="text-align:center;">Kepala UPT SMK Negeri Singojuruh</p><br><br><br>
-                            <p style="text-align:center;"><u>GATOT KURNIATA S.Pd., M.M.</u></p>
-                            <p style="text-align:center;margin-top:-10px">NIP. 19660210 199103 1 017</p>
-                        </td>
-                        <td scope="col" style="border:1px solid #ffffff;">
-                            <p style="text-align:center;">Waka Sarpras</p><br><br><br>
-                            <p style="text-align:center;"><u>MOH. HARIS, ST., MT.</u></p>
-                            <p style="text-align:center;margin-top:-10px">NIP. 19660210 199103 1 017</p>
-                        </td>
-                        <td scope="col" style="border:1px solid #ffffff;">
-                            <p style="text-align:center;">Pengurus Barang</p><br><br><br>
-                            <p style="text-align:center;"><u><?php echo $user['name']; ?></u></p>
-                            <p style="text-align:center;margin-top:-10px">NIP. -</p>
+            <thead>
+                <tr>
 
-                        </td>
-                    </tr>
-                </thead>
+                    <td scope="col" style="border:1px solid #ffffff;">
+                        <p style="text-align:center;">Kepala UPT SMK Negeri Singojuruh</p><br><br><br>
+                        <p style="text-align:center;"><u>GATOT KURNIATA S.Pd., M.M.</u></p>
+                        <p style="text-align:center;margin-top:-10px">NIP. 19660210 199103 1 017</p>
+                    </td>
+                    <td scope="col" style="border:1px solid #ffffff;">
+                        <p style="text-align:center;">Waka Sarpras</p><br><br><br>
+                        <p style="text-align:center;"><u>MOH. HARIS, ST., MT.</u></p>
+                        <p style="text-align:center;margin-top:-10px">NIP. 19660210 199103 1 017</p>
+                    </td>
+                    <td scope="col" style="border:1px solid #ffffff;">
+                        <p style="text-align:center;">Pengurus Barang</p><br><br><br>
+                        <p style="text-align:center;"><u><?php echo $user['name']; ?></u></p>
+                        <p style="text-align:center;margin-top:-10px">NIP. -</p>
 
-            </table>
-        </div>
+                    </td>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
     </div>
 </body>
 

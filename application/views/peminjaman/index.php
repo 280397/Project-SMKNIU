@@ -25,7 +25,7 @@
                                     <th scope="col">Barcode</th>
                                     <th scope="col">Item</th>
                                     <th scope="col">Tgl Pinjam</th>
-                                    <th scope="col">Pengajuan</th>
+                                    <th scope="col">Pengajuan Pengembalian</th>
                                     <th scope="col">Admin</th>
                                     <th scope="col">Status</th>
                                 </tr>
